@@ -1,0 +1,85 @@
+---
+title: "Pretest"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\textbf{This pretest is designed for me to better to understand your prior knowledge of R and statistical computing. There is no harm in leaving a question blank if you do not know the answer.  This does not count toward your grade}
+
+Please put your name at the top of this sheet of paper. You have 10 minutes to answer all of the questions below. The pretest is openbook -- you may use R, Google, etc.  Please write your answers on the paper below.
+
+1\. Write code to calculate the mean of a vector, `x`, using only standard arithmetic operations and the `sum()` function and any other functions except `mean()`.
+
+```{r, eval=F}
+sum(x)/length(x)
+```
+
+
+
+2\. I want to make a function that will take a numeric vector, `xvec` as input, and add 2 to every element, and return the updated vector. Write in the necessary code to complete the function below.
+```{r eval=F}
+myFunction <- function(x){
+  x+2
+}
+```
+
+
+
+3\. Write out \textit{three} ways to access the first element of \texttt{myList}.
+```{r}
+myList <- list(letters = c("a", "B", "C"), numbers = c(1,2,3))
+myList[[1]]
+myList[["letters"]]
+myList[[-2]]
+```
+
+
+
+
+4\. Write in words what the following R code accomplishes. You can assume that both
+inputs are vectors of the same length.
+```{r eval=FALSE}
+thisFun <- function(vec1, vec2){
+  output <- FALSE
+    for(i in 1:length(vec1)){
+      if(vec1[i] == vec2[i]){
+        output <- TRUE
+      }
+    }
+  return(output)
+}
+```
+
+`thisFun()` returns `TRUE` if any element in the same position in `vec1` and `vec2`, say the fourth element, is the same.
+
+
+
+
+5\. Identify the flaw in the following code:
+```{r eval=FALSE}
+x <- 1
+while(x <= 20){
+x <- (1 - x/20)
+}
+```
+
+The `while()` loop will never exit. `x` will always be smaller than 1 for infinite iterations.
+
+
+
+6\. What would the code below accomplish, assuming that the file \texttt{Simulations.csv} already exists?
+```{r eval=FALSE}
+cat("\n", file = "~/Simulations.csv", append = TRUE)
+```
+
+It would append an empty row to the end of the file.
+
+7\. What function can I use to add the point $(2,1)$ to an existing plot?
+
+The `points()` function.
+
+

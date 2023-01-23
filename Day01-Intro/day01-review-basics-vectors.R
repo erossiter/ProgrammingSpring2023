@@ -46,6 +46,7 @@ print("My name is Erin")
 # - R comes with many basic functions.
 # - Additional functionality are available in user-contributed packages
 #   that can be downloaded, loaded, and used.
+library("ggplot2")
 
 
 ## R as a calculator
@@ -73,7 +74,7 @@ NULL # Nothing.
 0/0 # NaN means "Not a number"
 NaN
 1/0 # Inf means infinity
-
+Inf
 
 # Tip: Use the up and down arrows to access previously typed commands
 
@@ -139,12 +140,17 @@ logical_vector
 4 <= 4 # less than or equal to
 4 > 5 # strictly greaeter than
 4 >= 5 # greater than or equal to
-4 == 4 # equal
+4 == 4 # equal #one = is assignment
 4 != 5 # not equal
 
 # More logical operators and truth tables
 # https://sites.millersville.edu/bikenaga/math-proof/truth-tables/truth-tables.html
-! 4 < 5 # read `!` as "NOT", it is negation
+! (4 < 5) # read `!` as "NOT", it is negation
+
+ages <- c(16, 17, 22, NA)
+mean(ages[!is.na(ages)])
+mean(ages, na.rm = T)
+
 a <- TRUE
 b <- TRUE
 c <- FALSE
@@ -186,11 +192,7 @@ hi <- "hi! :)"
 bye <- "bye :("
 rm(list = c("hi", "bye"))
 
-# rm(list = ls()) #removes ~everything~ 
-
-# Tip: specific rules in a programming language is called "syntax"
-# - if-else statements in R have special syntax so R knows what to do
-# - note how it requires () and {}
+rm(list = ls()) #removes ~everything~ 
 
 # Tip: comment multiple lines of code with command + shift + c (mac)
 

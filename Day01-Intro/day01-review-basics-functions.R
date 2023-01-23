@@ -19,7 +19,7 @@ rm(list = ls())
 f <- function(x){
   return(x^2)
 }
-f(2)
+f(x = 2)
 f(3)
 f(4)
 
@@ -43,9 +43,13 @@ sum_of_squares <- function(x, y){
 sum_of_squares(x = 2, y = 3)
 sum_of_squares(x = 1, y = 1)
 
+mynum <- 5
+sum_of_squares(x = mynum, y = 1)
+sum_of_squares(mynum, 1)
+
 # x and y are defined only in the "local environment" of the function
 # notice they are not in the global environment! We can't access them:
-x
+
 
 # Example 2:
 
@@ -99,7 +103,8 @@ max(USArrests$Assault)
 
 # Some functions evaluate each element
 is.na(USArrests$Assault)
-USArrests$Assault > 100
+sum(USArrests$Assault > 100)
+
 
 # Some functions will create vectors as outputs
 rep(1, 5)
@@ -120,4 +125,5 @@ rep(c(1,4), each = 3) # Repeat each value 3 times
 # Example: say we wanted to add the murder and assault arrests
 # for each state... what is this code doing?
 USArrests$Murder[1:5] + USArrests$Assault
+USArrests$Assault*100000
 
