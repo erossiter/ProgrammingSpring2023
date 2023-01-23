@@ -1,0 +1,82 @@
+---
+title: "Pretest"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\textbf{This pretest is designed for me to better to understand your prior knowledge of R and statistical computing. There is no harm in leaving a question blank if you do not know the answer.  This does not count toward your grade}
+
+Please put your name at the top of this sheet of paper. You have 10 minutes to answer all of the questions below. The pretest is openbook -- you may use R, Google, etc.  Please write your answers on the paper below.
+
+1\. Write code to calculate the mean of a vector, `x`, using only standard arithmetic operations and the `sum()` function.
+\vspace{8em}
+
+
+
+2\. I want to make a function that will take a numeric vector, `xvec` as input, and add 2 to every element, and return the updated vector. Write in the necessary code to complete the function below.
+```{r eval=FALSE}
+myFunction <- function(x){
+  
+  
+  
+  
+  
+}
+```
+
+
+
+3\. Write out \textit{three} ways to access the first element of \texttt{myList}.
+```{r}
+myList <- list(letters = c("a", "B", "C"), numbers = c(1,2,3))
+```
+\vspace{8em}
+
+
+
+
+4\. Write in words what the following R code accomplishes. You can assume that both
+inputs are vectors of the same length.
+```{r eval=FALSE}
+thisFun <- function(vec1, vec2){
+  output <- FALSE
+    for(i in 1:length(vec1)){
+      if(vec1[i] == vec2[i]){
+        output <- TRUE
+      }
+    }
+  return(output)
+}
+```
+
+\vspace{8em}
+
+
+
+
+5\. Identify the flaw in the following code:
+```{r eval=FALSE}
+x <- 1
+while(x <= 20){
+x <- (1 - x/20)
+}
+```
+\vspace{8em}
+
+
+
+
+6\. What would the code below accomplish, assuming that the file \texttt{Simulations.csv} already exists?
+```{r eval=FALSE}
+cat("\n", file = "~/Simulations.csv", append = TRUE)
+```
+\vspace{8em}
+
+
+7\. What function can I use to add the point $(2,1)$ to an existing plot?
+
+

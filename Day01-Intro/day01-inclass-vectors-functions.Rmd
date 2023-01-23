@@ -1,0 +1,66 @@
+---
+title: "Vectors and Functions"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write the R code to answer the following questions. Write the code and then
+show what the computer returns when that code is run. Make sure to change the appropriate header in the R code block to make this document compile.
+
+You have until the beginning of next class to answer all of the questions below and commit to GitHub. Submit the Rmarkdown and the knitted PDF to Canvas.
+
+
+Helpful functions here include
+
+- `sin`
+- `tan`
+- `sqrt`
+- `sum` 
+- `abs` 
+
+Some math "reminders"
+
+- $\sum_{i=1}^{10} i$ means "sum of numbers from 1 to 10"
+- $\forall i \in [1, 20]$ means "for all integers in the range 1 to 20"
+    
+    
+# Questions
+
+1. $e^2$
+```{r}
+#Code
+```
+
+2. $((4)^5)^{\frac{1}{8}}$
+```{r}
+#Code
+```
+
+3. $sin(\frac{\pi}{3}) \times (1+tan(\frac{\pi}{3}))$
+```{r}
+#Code
+```
+
+4. $\sqrt{14^3 - 6^{\frac{3}{2}}}$
+```{r}
+#Code
+```
+
+5. $\vert -ln(2\pi \times (\sqrt{e^9}))\vert$
+```{r}
+#Code
+```
+
+6. $\sum\limits^{50}_{i=5}i^{i-1}$
+```{r}
+#Code
+```
+
+7. $\forall i \in [1,50], \text{ } \sqrt{(i)}$
+```{r}
+#Code
+```

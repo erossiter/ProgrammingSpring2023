@@ -1,0 +1,12 @@
+% make incrementing bullets transparent instead of invisible
+\setbeamercovered{transparent}
+
+% customize bullet styles
+\setbeamertemplate{itemize item}{--}
+\setbeamertemplate{itemize subitem}{>>}
+\setbeamertemplate{itemize subsubitem}[circle]
+
+% include frame numbers without the total number of slides included
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{%
+	\raisebox{8pt}{\makebox[\paperwidth]{\hfill\makebox[16pt]{\scriptsize\insertframenumber}}}}
