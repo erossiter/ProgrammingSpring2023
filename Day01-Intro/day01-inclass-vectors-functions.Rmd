@@ -64,9 +64,17 @@ abs(-log(2 * pi * sqrt(exp(9)) ))
 ```{r}
 #Code
 sum((5:50)^(4:49))
+
+# Alternative using for loop
+running_sum <- 0
+for(i in 5:50){
+  running_sum <- running_sum + i^(i-1)
+}
+running_sum
 ```
 
 7. $\forall i \in [1,50], \text{ } \sqrt{(i)}$
 ```{r}
 #Code
+sqrt(1:50)
 ```
