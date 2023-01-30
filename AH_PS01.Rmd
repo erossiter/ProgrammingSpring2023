@@ -1,0 +1,257 @@
+---
+title: "Problem Set 1"
+date: "Due January 31, 2023"
+output:
+  pdf_document: default
+  html_document:
+    df_print: paged
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+- Read all of these instructions closely.
+- This problem set is due Tuesday, January 31, 2023 at 4pm.  We will talk in class on Monday, January 30 about how to submit via Github.
+- Submit files via Github:
+  1. the .Rmd (R Markdown) file
+  2. the knitted .pdf file
+  3. anything else the particular problem set might require
+- Use a copy of this file, perhaps with your name or initials appended to the file name, to write your answers to the questions. You'll see there is a designated space where your answers should begin.
+- Knitting the .Rmd file to a .pdf file *as you work* will ensure your code runs without errors and is working how you expect.  Knit early and often.  You've already read the instruction that a knitted .pdf is required when you submit.  (Question 1 practices this.)
+- Per the syllabus, I will not accept any late work.  Keep in mind the two lowest problem set scores are dropped.  Turn in what you have.
+
+
+
+# Question 1--Getting Started with RMarkdown
+
+This question will help orient you to RMarkdown if you haven't used it before.
+
+## 1a
+
+In your own words, what is the difference between R, RStudio, and RMarkdown?  
+
+Answer:
+R is a free, open-source programming language used to manage data sets, create simulations, and create visualizations and models based on that data. 
+
+RStudio is an environment used to make R more user-friendly. The platform makes managing collections of code easier to edit and write, while the actual R processes are still done in R. 
+
+RMarkdown is a type of R file that allows you to knit the document into other file types, while also allowing the inclusion of normal (non-coding) text. 
+
+
+## 1b
+
+When we're working in an RMarkdown file (like this one), we can easily write text around our R code.  To distinguish was is R code, we put in what is called "code chunks." To see how it works, put `2+2` in the grey area, or "code chunk," below. Then, run the code.  Make sure you see the answer *both* in the RStudio console and right below the code chunk.
+
+Answer:
+
+```{r}
+
+2+2
+```
+
+
+## 1c
+
+We can edit and run code as we're working in the .Rmd file in RStudio (that is what we did in 1b).  We can further "knit" the file into a .pdf.  Knitting will compile the text and run the code you've written, starting at the top of the file from scratch and working its way down. (This means it doesn't have access to objects in the global environment.  Everything you need must be written in the .Rmd).
+
+Before proceeding any further in the assignment, try knitting.  Click the "Knit" button in RStudio and a .pdf of the same name should be created in the location of where this .Rmd is saved.  If you can't find the "Knit" button, it is displayed as #3 on [this cheatsheet](https://rmarkdown.rstudio.com/lesson-15.HTML).
+
+Find the .pdf file and check that the R code in 1b was executed and is correct.
+
+Note:
+
+1. You may need to install an additional library or two for the .pdf to knit.  I've included that code below. Ping me in Slack as needed to debug any issues you might encounter on your individual computer.
+2. If you want to see someone walk through these steps, I recommend [this short video](https://www.youtube.com/watch?v=oCK69u_yWQY).
+
+
+```{r}
+install.packages("tinytex")
+tinytex::install_tinytex()   
+```
+
+
+
+
+# Question 2--Agility with Vectors and Functions
+
+We learned several functions in class, like `rep` and `seq`.  This question asks you to use a few more, like `paste0`, to practice working with vectors and functions.  Developing agility with these R basics will help you with broader skills like cleaning data.
+
+Hint: Look at the helpfiles for these functions if they are new to you by typing, for example, `?paste0` in the console and viewing the file that populates in the "Help" tab in the bottom right of RStudio.
+
+## 2a
+
+Create a vector called `x` of the elements 1 to 100 (i.e., $[1,100]$).  Then, make every odd-indexed element of the vector $x$ negatively signed.
+
+```{r}
+x <- (1:100)
+ifelse(x %% 2 != 0, x*-1, x)
+```
+
+
+
+## 2b
+
+Use the `seq()` and `paste0()` functions to create the vector called `varnames` with the following structure: `c("Var10", "Var20", "Var30", "Var40", "Var50", "Var60")`
+
+```{r}
+varnames <- paste0("Var", seq(10,60,10))
+
+varnames
+```
+
+
+
+## 2c
+
+Using the vector you created in 2b, write code that removes the leading "Var" from each element of the vector.  Call the new vector `varnames_str`, and the resulting vector should be the following strings: `c("10", "20", "30", "40", "50", "60")`
+
+Hint: you could use the `substr` function.
+
+```{r}
+varnames_str <- substr(varnames, 4,5)
+#I had never used substr before, http://rfunction.com/archives/1692 explained it to me before I typed the code
+varnames_str
+
+
+
+
+```
+
+
+
+
+## 2d
+
+Use the vector `varnames_str` created in 2c and change the string elements into numeric values, naming this vector `varnames_num`.  The new vector should look like this: `c(10, 20, 30, 40, 50, 60)`
+
+```{r}
+varnames_num <- as.numeric(varnames_str)
+varnames_num
+```
+
+
+
+## 2e
+
+Create a subset the vector `varnames_num` from 2d that only includes the numbers divisible by 4.  Name this vector `varnames_d4`.
+
+Hint: you might use the modulo function, `%%`.
+
+```{r}
+varnames_d4 <- varnames_num[varnames_num%%4==0]
+
+varnames_d4
+```
+
+
+
+## 2f
+
+Uncomment and run the following code and describe exactly what is happening (what R functionality and calculations) to get this result.
+
+Hint: it might help to write the math out for each element.
+
+```{r}
+varnames_num - varnames_d4
+
+#Varnames_num is c(10,20,30,40,50,60)
+#varnames_d4 is c(20,40,60)
+
+#This code is utilizing the fact that math is vectorized in R. The matching placements of a vector (position 1 and position 1, position 2 and position 2, etc) are being subtracted from each other. Here, the number of elements do not match. The larger vector has 6, and the smaller vector has 3. As we talked about in class last week, R automatically begins using the smaller vector again. 
+
+#Here, varnames_num[1] - varnames_d4[1] = -10, followed by the second and third positions (-20, -30, respectively). Then, the shorter vector's first position is used again. varnames_num[4] - varnames_d4[1] = 20. This pattern is followed until the subtraction has happened for every element of varnames_num. 
+```
+
+
+# Question 3--Math in R
+
+Like the inclass activity, this question asks you to practice translating math equations into R. While you might not plan to do a lot of math in R in the future, this question helps make R rules and syntax second-nature e.g., closing all open parentheses, knowing how to work with vectorized operations, etc.
+
+Hint: look at the compiled .pdf file I provided to see the math in an easily-readable format and ignore the code between the pink dollar signs.
+
+## 3a
+
+$\frac{3}{7} \times2^{\frac{1}{5}} \times \sum_{i=1}^{50} i$
+
+```{r}
+((3/7) * (2^(1/5)) * (sum(1:50)))
+
+#Answer: 627.6816
+
+```
+
+
+
+## 3b
+
+$\sum_{i=1}^{50} (i+10)$
+
+```{r}
+#sum((1:50)^(11:60)) 
+sum(11:60)
+#Answer 1775
+
+```
+
+
+
+
+## 3c
+
+
+$\forall i \in [1,10],\; i^{\sqrt{i+2}}$
+
+```{r}
+(1:10)^(sqrt((1:10)+2))
+```
+
+
+
+
+## Question 4--Writing Functions
+
+## 1a
+
+Write a function named `sample_var` that takes one input, a numeric vector `x`, and calculates the standard sample variance formula.  Have the function return the answer.
+
+$$\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2$$
+
+```{r}
+sample_var <- function(x){
+  return(sum(((x-mean(x))^2)) / (length(x) - 1))
+}
+
+```
+
+
+
+
+
+## 1b
+
+Use the function you wrote in 1a to calculate the sample variance of the following vector.  You can use the built-in function in R to double check your function is correct
+
+```{r}
+vec <- c(2, 5, 10, 12, 3, 3, 4, 1, 20)
+var(vec)
+sample_var(vec) # this should return same answer as var()
+
+
+#YAY!
+```
+
+
+## 1c
+
+Now, try running your function on the following vector.  Why won't it work?
+
+```{r}
+vec_str <- c("2", "5", "10", "12", "3", "3", "4", "1", "20")
+
+#This vector is a string and not numeric. We can't use arithmetic commands on string elements. The quotation marks are how we can tell. 
+```
+
