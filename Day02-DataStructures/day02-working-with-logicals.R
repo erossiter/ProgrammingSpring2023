@@ -1,5 +1,6 @@
 # Using logicals for basic tasks
 
+
 # Now that we have our common *data structures*
 # we need to be prepared to work with them, and 
 # logicals come in handy
