@@ -13,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 Please put your name at the top of this sheet of paper. You have 10 minutes to answer all of the questions below. The pretest is openbook -- you may use R, Google, etc.  Please write your answers on the paper below.
 
 1\. Write code to calculate the mean of a vector, `x`, using only standard arithmetic operations and the `sum()` function.
-\vspace{8em}
+\vspace{8em} 
 
 
 
