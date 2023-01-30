@@ -22,6 +22,8 @@ output:
 - A little lab
 
 
+
+
 # The Big Picture (the *really* big picture)
 
 ## Goals of advanced education
@@ -108,8 +110,8 @@ My Jan 17 email walks through having these things installed:
 Tools of the trade
 
 - **R:** programming language, written in an R script (.R file)
-– **RStudio:** friendly interface where we edit and execute our R code
-– **RMarkdown:** (.Rmd files) allow you to use markdown syntax
+- **RStudio:** friendly interface where we edit and execute our R code
+- **RMarkdown:** (.Rmd files) allow you to use markdown syntax
 and R and compile into neat .pdf (or .html) file
 
 

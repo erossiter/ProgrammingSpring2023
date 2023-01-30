@@ -12,19 +12,18 @@ knitr::opts_chunk$set(echo = TRUE)
 
 Please put your name at the top of this sheet of paper. You have 10 minutes to answer all of the questions below. The pretest is openbook -- you may use R, Google, etc.  Please write your answers on the paper below.
 
-1\. Write code to calculate the mean of a vector, `x`, using only standard arithmetic operations and the `sum()` function.
-\vspace{8em} 
+1\. Write code to calculate the mean of a vector, `x`, using only standard arithmetic operations and the `sum()` function and any other functions except `mean()`.
+
+```{r, eval=F}
+sum(x)/length(x)
+```
 
 
 
 2\. I want to make a function that will take a numeric vector, `xvec` as input, and add 2 to every element, and return the updated vector. Write in the necessary code to complete the function below.
-```{r eval=FALSE}
+```{r eval=F}
 myFunction <- function(x){
-  
-  
-  
-  
-  
+  x+2
 }
 ```
 
@@ -33,8 +32,10 @@ myFunction <- function(x){
 3\. Write out \textit{three} ways to access the first element of \texttt{myList}.
 ```{r}
 myList <- list(letters = c("a", "B", "C"), numbers = c(1,2,3))
+myList[[1]]
+myList[["letters"]]
+myList[[-2]]
 ```
-\vspace{8em}
 
 
 
@@ -53,7 +54,7 @@ thisFun <- function(vec1, vec2){
 }
 ```
 
-\vspace{8em}
+`thisFun()` returns `TRUE` if any element in the same position in `vec1` and `vec2`, say the fourth element, is the same.
 
 
 
@@ -65,8 +66,8 @@ while(x <= 20){
 x <- (1 - x/20)
 }
 ```
-\vspace{8em}
 
+The `while()` loop will never exit. `x` will always be smaller than 1 for infinite iterations.
 
 
 
@@ -74,9 +75,11 @@ x <- (1 - x/20)
 ```{r eval=FALSE}
 cat("\n", file = "~/Simulations.csv", append = TRUE)
 ```
-\vspace{8em}
 
+It would append an empty row to the end of the file.
 
 7\. What function can I use to add the point $(2,1)$ to an existing plot?
+
+The `points()` function.
 
 

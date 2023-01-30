@@ -33,34 +33,48 @@ Some math "reminders"
 1. $e^2$
 ```{r}
 #Code
+exp(2)
 ```
 
 2. $((4)^5)^{\frac{1}{8}}$
 ```{r}
 #Code
+(4^5)^(1/8)
 ```
 
 3. $sin(\frac{\pi}{3}) \times (1+tan(\frac{\pi}{3}))$
 ```{r}
 #Code
+sin(pi/3)*(1 + tan(pi/3))
 ```
 
 4. $\sqrt{14^3 - 6^{\frac{3}{2}}}$
 ```{r}
 #Code
+sqrt(14^3 - 6^(3/2))
 ```
 
 5. $\vert -ln(2\pi \times (\sqrt{e^9}))\vert$
 ```{r}
 #Code
+abs(-log(2 * pi * sqrt(exp(9)) ))
 ```
 
 6. $\sum\limits^{50}_{i=5}i^{i-1}$
 ```{r}
 #Code
+sum((5:50)^(4:49))
+
+# Alternative using for loop
+running_sum <- 0
+for(i in 5:50){
+  running_sum <- running_sum + i^(i-1)
+}
+running_sum
 ```
 
 7. $\forall i \in [1,50], \text{ } \sqrt{(i)}$
 ```{r}
 #Code
+sqrt(1:50)
 ```
