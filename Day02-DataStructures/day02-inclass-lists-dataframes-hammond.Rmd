@@ -93,6 +93,5 @@ mean(df[df$condition == "Treatment", "Y"])
 
 In a few words, explain a few reasons you might decide to use a list vs. a dataframe (or vice versa) for a programming task.  What are some different use cases for each?
 
-We would use a list if we want a list of numbers and we would use a dataframe if we want to look at a matrix with more variables. 
-
+We would use a list if we want a list of numbers and we would use a dataframe if we want to look at a matrix with more variables. Lists can be good if we need to view just a list of numbers or strings just to get the basic data layout. They are preferable for smaller datasets. For larger datasets it would be better to use dataframe and then View them laid out. We can access columns in that data set using "$." 
 
