@@ -1,0 +1,118 @@
+---
+title: "Lists and Dataframes"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write the R code to answer the following questions. You have until the beginning of next class to answer all of the questions below and commit to GitHub, both the .Rmd file and the .pdf.
+
+
+    
+# Question 1 - Lists
+
+Run this code, then answer the questions below.
+
+```{r}
+data(cars)
+mylm <- unclass(lm(dist ~ speed, data = cars))
+```
+
+## 1a
+
+Is `mylm` a list?
+
+```{r}
+class(mylm)
+```
+Yes
+
+
+## 1b
+
+What is the class of the element named `model` in the `mylm` object?
+
+
+```{r}
+class(mylm$model)
+```
+Data frame 
+
+
+
+## 1c
+
+Change the column names of the element named `model` in the `mylm` object to `Y` and `X`.
+
+
+```{r}
+
+colnames(mylm$model) <- c("Y", "X")
+
+mylm$model$Y
+
+```
+
+## 1d
+
+Assign the element named `model` in the `mylm` object to a new object called `df`.  What is the class of this object?  Is it the same class or different than the object in 1b?  Why?
+
+
+```{r}
+
+df <- mylm$model
+
+class(df)
+
+```
+df is a data frame. It is the same class. We have pulled the data frame in 1b out of the list, but we have not changed that data frame. 
+
+
+
+# Question 2 - Dataframes
+
+In this exercise, you will create a new column in the data frame based on values in an existing column. Use the following code to create the data frame.
+
+```{r}
+set.seed(123)
+df <- data.frame(Y = runif(10, 0, 1),
+                 X = rbinom(10, 1, .5))
+df$condition <- NA
+```
+
+## 2a
+
+Populate the entries of the variable `condition` with the string "Treatment" if the corresponding value of `X` is 1 and "Control" otherwise.
+
+```{r}
+df$condition[df$X == 1] <- "Treatment"
+df$condition[df$X == 0] <- "Control"
+
+
+```
+
+
+## 2b
+
+What is the mean value of `Y` for the observations where `condition` is "Treatment"?
+
+```{r}
+
+mean(df$Y[df$condition=="Treatment"])
+
+#Answer: 0.4163
+
+```
+
+
+
+# Question 3
+
+In a few words, explain a few reasons you might decide to use a list vs. a dataframe (or vice versa) for a programming task.  What are some different use cases for each?
+
+Lists feel more appropriate when you have a variety of data that don't always have the same lengths. If you're just trying to make a collection of vaguely related information, lists are good. Data frames are more intuitive for me personally, and are necessary for running models. 
+
+
