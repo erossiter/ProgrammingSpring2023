@@ -86,7 +86,7 @@ Answer:
 x <- seq(1,100)
 #this code will make every other character negative
 x[c(seq(1,100,by=2))] <- -x[c(seq(1,100,by=2))]
-list(x)
+list(x) # ELR Note: Good! But why list(x)?  could just print it
 ```
 ## 2b
 
