@@ -1,0 +1,129 @@
+---
+title: "Lists and Dataframes"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write the R code to answer the following questions. You have until the beginning of next class to answer all of the questions below and commit to GitHub, both the .Rmd file and the .pdf.
+
+
+    
+# Question 1 - Lists
+
+Run this code, then answer the questions below.
+
+```{r}
+data(cars)
+mylm <- unclass(lm(dist ~ speed, data = cars))
+```
+
+## 1a
+
+Is `mylm` a list?
+
+Answer:
+
+Yes! You can look several ways.  `is.list()` checks if the object is a list and returns TRUE, `class()` tells you it is a list, and in the global environment it says "List of 12.
+
+```{r}
+is.list(mylm)
+class(mylm)
+```
+
+
+## 1b
+
+What is the class of the element named `model` in the `mylm` object?
+
+Answer:
+
+It is a data.frame.  You can see this by using the `class` function on just the `model` object, or you can read the output of `str`, although that is a little tedious because the output is so long.
+
+```{r}
+class(mylm[["model"]])
+str(mylm)
+```
+
+
+
+## 1c
+
+Change the column names of the element named `model` in the `mylm` object to `Y` and `X`.
+
+Answer:
+
+```{r}
+colnames(mylm[["model"]]) # what they were originally
+colnames(mylm[["model"]]) <- c("Y", "X") # changing them
+colnames(mylm[["model"]]) # check it out
+```
+
+## 1d
+
+Assign the element named `model` in the `mylm` object to a new object called `df`.  What is the class of this object?  Is it the same class or different than the object in 1b?  Why?
+
+Answer:
+
+It is also a data.frame.  We haven't editted the object, so the class hasn't changed.  We've only assigned it to a new object outside the list.
+
+```{r}
+df <- mylm[["model"]]
+class(df)
+```
+
+
+
+# Question 2 - Dataframes
+
+In this exercise, you will create a new column in the data frame based on values in an existing column. Use the following code to create the data frame.
+
+```{r}
+set.seed(123)
+df <- data.frame(Y = runif(10, 0, 1),
+                 X = rbinom(10, 1, .5))
+df$condition <- NA
+```
+
+## 2a
+
+Populate the entries of the variable `condition` with the string "Treatment" if the corresponding value of `X` is 1 and "Control" otherwise.
+
+Answer:
+
+I use logicals to check if `X` is 1, and if that is TRUE, I recode `condition` to "Treatment.  Using another line of code, I use the same process to check if `X` is 0, and in the positions where that is TRUE in the `condition` vector, I assign "Control."
+
+```{r}
+df$condition[df$X == 1] <- "Treatment"
+df$condition[df$X == 0] <- "Control"
+df
+```
+
+
+## 2b
+
+What is the mean value of `Y` for the observations where `condition` is "Treatment"?
+
+Answer:
+
+Starting from the inside and working out -- I first check if `condition` is equal to "Treatment", which returns logicals.  I subset to where that evaluates to TRUE and take the mean of only those 5 values.  I do the same for control.
+
+```{r}
+mean(df$Y[df$condition == "Treatment"])
+mean(df$Y[df$condition == "Control"])
+```
+
+
+
+# Question 3
+
+In a few words, explain a few reasons you might decide to use a list vs. a dataframe (or vice versa) for a programming task.  What are some different use cases for each?
+
+Answer:
+
+A list is much more flexible.  I might use a list if writing my own function to output statistical results where the results take different sizes (i.e., a vector of coefficients will have a different length than a vector of residuals in an `lm` output).  However, when working with a dataset where each row is an observation, I will most likely use a data.frame because the rectangular shape makes sense.  
+
+
