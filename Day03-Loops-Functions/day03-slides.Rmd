@@ -1,0 +1,59 @@
+---
+title: "Day 03: Loops and Functions"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: Erin Rossiter
+output:
+  beamer_presentation:
+    slide_level: 2
+    includes:
+      in_header: ../msc_files/preamble.tex
+---
+
+# Today's plan
+
+- Catch up from last time
+  - Rmd help
+  - ChatGPT discussion
+- Github review
+- Project discussion
+- Flow control
+  - if else
+  - for loops
+  - inclass activity
+- Advanced functions
+  - inclass activity
+- PS03 prep
+
+
+
+# Github Review
+
+- Keep in mind, Github is a coding skill in and of itself
+- We had problems last week because of **conflicts**
+  - both you and I changed the same line of the same file
+  - Github didn't know what to do
+  - you create copies, then edit, we should be good
+- `ds_store` file keeps info about how you navigated through your file directory
+  - can always safely delete :)
+- Workflow:
+  - commit your changes
+  - push online
+  - pull my additions (psets, comments on psets, lecture materials, etc.)
+  
+
+# Announcements
+
+- PS01 graded
+  - grades in Canvas
+  - comments on Rmd files
+- PS02 due tomorrow
+- PS03 distributed tomorrow
+  - includes a question on final projects
+  
+  
+# Final projects
+
+- Guidelines in Github
+- Flushed out idea expected next week in problem set
+
+
