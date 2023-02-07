@@ -129,7 +129,7 @@ Bonus: Make this code flexible as well.
 
 ```{r}
 drops <- c("Useless_Var","Source")
-df[ , !(names(df) %in% drops)]
+df = df[ , !(names(df) %in% drops)]
 ```
 
 
