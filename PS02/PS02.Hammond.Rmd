@@ -1,13 +1,15 @@
 ---
-title: "Problem Set 2"
+title: "Max Hammond, Problem Set 2"
 date: "Due February 7, 2023"
 output: pdf_document
 urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
 ```
+
+## I turned evaluation off when knitting because my code after dropping the variables would show the entire dataframe in the answer##
 
 ## Instructions
 
@@ -41,8 +43,7 @@ Use R code to answer the following questions.
 
 ## 1a
 
-Are any `Amount` values missing?
-No
+Are any `Amount` values missing? No
 
 ```{r}
 sum(is.na (df$Amount))
@@ -51,7 +52,7 @@ sum(is.na (df$Amount))
 
 ## 1b
 
-How many observations are for refunds?  
+How many observations are for refunds?  276
 
 Hint: Read the codebook carefully for the `Amount` variable.
 
@@ -64,6 +65,8 @@ sum((df$Amount) < 0)
 
 What are the row indices for observations that indicate an amount spent of $1,000,000 or more?
 
+[1] 9169 14586 14868 14886 17290 17367
+
 ```{r}
 which (df$Amount >= 1000000)
 ```
@@ -72,6 +75,8 @@ which (df$Amount >= 1000000)
 ## 1d
 
 Double check that all of the `Cycle` values equal 2002.
+
+All 20,000 observations have the same year.
 
 ```{r}
 table(df$Cycle)
@@ -82,6 +87,8 @@ table(df$Cycle)
 ## 1e
 
 How many observations are for "Club for Growth" OR the "Madison Project" OR the "Republican National Cmte"?
+
+[1] 1337
 
 
 ```{r}
@@ -97,13 +104,11 @@ sum(df$Pacshort %in% c("Club for Growth" , "Republican National Cmte" , "Madison
 Using R functions, describe the following properties of the `df` object: class, dimensions, columnnames, rownnames, and anything else you think is pertinent.
 
 ```{r}
-class(df)
 dim(df)
 colnames(df)
+class(df)
 rownames(df)
 ```
-
-
 
 ## 2b
 
@@ -123,7 +128,8 @@ Remove the variables `Useless_Var` and `Source` from the dataframe.
 Bonus: Make this code flexible as well.
 
 ```{r}
-df %>% select(-one_of('Useless_Var', 'Source'))
+drops <- c("Useless_Var","Source")
+df[ , !(names(df) %in% drops)]
 ```
 
 
@@ -148,7 +154,7 @@ df$StateWrong <- df$State %in% x
 
 Using the `StateWrong` variable, report how many observations in the dataset have a wrong or missing value. Then remove these observations.  Confirm that you've removed the correct number of rows by checking the dimensions of the data.
 
-There were 92 missing values or errors in the dataset.
+There were 92 missing values or errors in the dataset.There are now 19908 observations in the dataset.
 
 ```{r}
 sum(df$StateWrong == TRUE)
@@ -157,32 +163,35 @@ df <- df[!df$StateWrong, ]
 
 ## 2f
 
-Create the variable in the dataframe called `Payroll`.  It should be a logical indicating whether the `Descrip` variable contains the string "payroll" *regardless* of capitalization.  Report the number of `TRUE` values in this variable.
+Create the variable in the dataframe called `Payroll`.  It should be a logical indicating whether the `Descrip` variable contains the string "payroll" *regardless* of capitalization.  
+
+Report the number of `TRUE` values in this variable.
+[1] 158
 
 Hint: Use the `grepl` function and read the helpfile closely.
 
 ```{r}
 z <- c("payroll", "Payroll", "PAYROLL")
 df$Payroll <- df$Descrip %in% z
+sum(df$Payroll == TRUE)
+
 ```
 
 ## 2g
 
 Write a function named `sum_state_exp` that takes one character argument called `state_code`.  The function should return the total amount of expenditures in given state.
 
+[1] 478163
+[1] 1165688
+[1] 1994622
+
 ```{r}
 sum_state_exp <- function(state_code) {
-  state_exp <- df[df$state_code == state_code,]
-  return(sum(state_exp$amount))
+  state_exp <- df[df$State== state_code, ]
+  return(sum(state_exp$Amount))
 }
-
-
-
 # After writing the function, run it for IA, IL, and CA
 sum_state_exp(state_code = "IA")
 sum_state_exp(state_code = "IL")
 sum_state_exp(state_code = "CA")
 ```
-
-
-

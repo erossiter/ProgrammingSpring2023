@@ -17,10 +17,12 @@ Write the R code to answer the following questions. You have until the beginning
 Use a while loop to print every third number in $[1,100]$.
 
 ```{r}
-# code here
+x <- 1:100
+every <- x[seq(from=1, to=100, by=3)]
+for (x in every){
+}
+every
 ```
-
-
 
 # Question 2
 
@@ -38,12 +40,11 @@ Write a for loop that will print the following pattern line-by-line in the R con
 
 
 ```{r}
-# code here
+for(i in c(1:20, 19:1)){
+  print(1:i)
+}
+
 ```
-
-
-
-
 # Question 3
 
 Write code to flip the coin ("H" and "T"), printing the flip to the console, until you get the same result three times in a row.

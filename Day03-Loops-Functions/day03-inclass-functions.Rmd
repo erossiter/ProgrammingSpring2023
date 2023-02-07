@@ -39,7 +39,13 @@ For $N$ observations indexed by $i$, the equation for RMSE is:
 $$RMSE = \sqrt{\frac{\sum^{N}_{i=1}\left( \hat{y}_{i} - y_{i} \right)^{2}}{N}}$$
 
 ```{r}
-#code here
+sample_var <- function(y){ 
+  yhat <- (fitted.values(y))
+  n <- length(y)
+  ss <- sum((y-yhat)ˆ2) 
+  RMSE <- sqrt(ss/n) 
+  return(var)
+}
 ```
 
 ## 1b

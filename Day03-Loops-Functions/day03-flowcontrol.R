@@ -57,14 +57,14 @@ if(x > 2) {
 
 # TODO: replace 10 with 1 and see what happens
 
-# NOTE: ifelse does not like vectors
+# NOTE: if does not like vectors
 if(c(3, 1) > 2){
   print("This is buggy")
 }
 
-## ifelse with vectors ----
+## ifelse is fine with vectors ----
 
-# Synatx:
+# Syntax:
 # ifelse(condition, return when condition T, return when condition F)
 
 x <- c(0, 2)
@@ -75,7 +75,11 @@ ifelse(x > 1, "yes", "no")
 # You don't technically need the braces if you have a one-line command
 # BUT you should almost always use them so others can read your code
 x <- 3
-if (x > 2) y = 2 * x else y = 3 * x
+if (x > 2) {
+  y = 2 * x 
+}else{
+  y = 3 * x
+} 
 y
 
 
