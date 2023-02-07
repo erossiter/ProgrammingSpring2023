@@ -117,13 +117,13 @@ Answer:
 
 ## 3c
 
-What is the broader motivation behind this project?  I am only interested in the programming element when it comes to fulfilling the course objectives, but I am still interested in your broader research!  Also, this will provide important context for me to help.
+What is the broader motivation behind this project?  I am only interested in the programming element when it comes to fulfilling the course objectives, but I am still interested in your broader research!  Also, this will provide important context for me to understand how to help.
 
 Answer:
 
 ## 3d
 
-This there any other necessary context you haven't mentioned in 3a or 3b. For example: Would you like a certain job after graduating and these skills are necessary for it?  Is this necessary work for your dissertation?  Is this project going to be used for another course as well?  (If so, you should consider checking with the other professor to make sure that is okay.). Is this an ongoing project you've been working on for some time?  Is this work for another professor as an RA? Etc.
+Is there any other necessary context you haven't mentioned in 3a, 3b, or 3c? For example: Would you like a certain job after graduating and these skills you hope to develop in this project are necessary for it?  Is this project necessary work for your dissertation?  Is this project going to be used for another course as well?  (If so, you should consider checking with the other professor to make sure that is okay.). Is this an ongoing project you've been working on for some time?  Is this work for another professor as an RA? Etc.
 
 Answer:
 
@@ -131,9 +131,9 @@ Answer:
 
 List the steps you imagine you'll need to take for this project from the most basic initial tasks to the end goal (that may or may not be reached in our one semester together).
 
-The amount of effort a coding project might take is hard to predict.  Some steps might be much quicker than you imagined.  Perhaps someone else has already done the work for you!  Or, some might be much more difficult than you imagined where overcoming a single unexpected roadblock turns into the entire course project.  Try to set the unpredictability of your project aside for a moment, and do your best to list the steps you think you'll need to execute the project idea.
+The amount of effort a coding project might take is hard to predict.  Some steps might be much quicker than you imagined.  Perhaps someone else has already done the work for you!  Or, some might be much more difficult than you imagined where overcoming a single unexpected roadblock turns into the entire course project.  Try to set the unpredictability of your project aside for a moment, and do your best to list the steps you think you'll need to execute the project.
 
-This is where you can start to flush out the idea and take some initial steps.  This is the most important question of the problem set and where I want you to put in some effort this week beginning to explore how to execute your project.  For example, for a scraping project, you should at least answer these questions: If there's a website you need to scrape, provide the link so I can look.  What pages on the website?  What parts of the pages are you most interested in?  Have you looked to make sure no one has done this yet? When you configure the data, what will each observation (i.e., row) be -- a country, a year, a person, a document? Etc.
+This is where you can start to flush out the idea and take some initial steps.  **This is the most important question of the problem set and where I want you to put in some effort this week beginning to explore how to execute your project.**  For example, for a scraping project, you should at least answer these questions: If there's a website you need to scrape, provide the link so I can look.  What pages on the website?  What parts of the pages are you most interested in?  Have you looked to make sure no one has done this yet? When you configure the data, what will each observation (i.e., row) be -- a country, a year, a person, a document? Etc.
 
 (Sidenote: the asterisk and plus sign is one way to make a nice bulleted list in Rmarkdown.  You can also create sub-bullets, see resources [here](https://rmarkdown.rstudio.com/authoring_basics.html).)
 
