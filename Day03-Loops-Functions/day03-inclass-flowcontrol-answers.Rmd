@@ -1,0 +1,57 @@
+---
+title: "if, else, for loops"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write the R code to answer the following questions. You have until the beginning of next class to answer all of the questions below and commit to GitHub, both the .Rmd file and the .pdf.
+
+
+    
+# Question 1
+
+Use a while loop to print every third number in $[1,100]$.
+
+```{r}
+i <- 1
+while(i <= 100){
+  print(i)
+  i <- i + 3
+}
+```
+
+
+
+# Question 2
+
+Write a for loop that will print the following pattern line-by-line in the R console printing integers up to 20, then back down.
+
+- 1
+- 1 2
+- 1 2 3
+- 1 2 3 ... 19 
+- 1 2 3 ... 19 20
+- 1 2 3 ... 19 
+- 1 2 3
+- 1 2
+- 1
+
+```{r}
+for(i in c(1:20, 19:1)){
+  print(1:i)
+}
+
+```
+
+
+# Question 3
+
+Write code to flip the coin ("H" and "T"), printing the flip to the console, until you get the same result three times in a row.
+
+```{r}
+# Answer omitted for now! It's on problem set.
+```
