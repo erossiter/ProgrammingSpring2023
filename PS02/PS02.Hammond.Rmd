@@ -6,7 +6,7 @@ urlcolor: blue
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ## I turned evaluation off when knitting because my code after dropping the variables would show the entire dataframe in the answer##
@@ -33,7 +33,6 @@ Before you being this question, you should familiarize yourself with the variabl
 ```{r}
 expenditures_url <- "https://www.dropbox.com/s/z6gw9lvve6jogi5/Expends2002.txt?raw=1"
 df <- read.csv(expenditures_url)
-View(df)
 ```
 
 
@@ -101,13 +100,14 @@ sum(df$Pacshort %in% c("Club for Growth" , "Republican National Cmte" , "Madison
 
 ## 2a
 
-Using R functions, describe the following properties of the `df` object: class, dimensions, columnnames, rownnames, and anything else you think is pertinent.
+Using R functions, describe the following properties of the `df` object: class, dimensions, columnnames, rownnames*, and anything else you think is pertinent.
+
+*rownames(df) will list too many observations so I chose to omit this from the assignment. 
 
 ```{r}
 dim(df)
 colnames(df)
 class(df)
-rownames(df)
 ```
 
 ## 2b
