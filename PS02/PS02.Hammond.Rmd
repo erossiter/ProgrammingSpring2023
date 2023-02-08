@@ -141,6 +141,7 @@ Hint: We did a recoding exercise in the inclass activity.
 
 Bonus: Try to use the `%in%` function.  We haven't used it in class yet.  It is similar to `==`.  The syntax is `x %in% y`, which assesses each value of vector `x` and asks, is it equal to any of the values in vector `y`?  I've included a simple example below.
 
+ELR Note: Not quite all of the errors.  See answer key.
 
 ```{r}
 
@@ -169,6 +170,8 @@ Report the number of `TRUE` values in this variable.
 [1] 158
 
 Hint: Use the `grepl` function and read the helpfile closely.
+
+ELR: What if it was "pAYroLL"? See answer key for how to use the grepl function.
 
 ```{r}
 z <- c("payroll", "Payroll", "PAYROLL")
