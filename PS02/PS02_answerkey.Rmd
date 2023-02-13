@@ -1,0 +1,301 @@
+---
+title: "Problem Set 2"
+date: "Due February 7, 2023"
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+- Read all of these instructions closely.
+- This problem set is due Tuesday, February 7, 2023 at 4pm.
+- Submit files via Github:
+  1. the .Rmd (R Markdown) file
+  2. the knitted .pdf file
+  3. anything else the particular problem set might require
+- Use a copy of this file, perhaps with your name or initials appended to the file name, to write your answers to the questions. You'll see there is a designated space where your answers should begin.
+- Knitting the .Rmd file to a .pdf file *as you work* will ensure your code runs without errors and is working how you expect.  Knit early and often.  You've already read the instruction that a knitted .pdf is required when you submit.
+- Per the syllabus, I will not accept any late work.  Keep in mind the two lowest problem set scores are dropped.  Turn in what you have.
+
+
+# Overview
+
+This problem set uses a subset of expenditures data for all campaigns and PACs available from Open Secrets for 2002 cycle.  The reduced dataset is available [here](https://www.dropbox.com/s/z6gw9lvve6jogi5/Expends2002.txt).  (While not the point of this question, I encourage you to visit the link to see how data shared on Dropbox can be imported directly into R via its url.)
+
+Before you being this question, you should familiarize yourself with the variables.  The codebook is available [here](https://www.opensecrets.org/resources/datadictionary/Data%20Dictionary%20Expenditures.htm).
+
+```{r}
+expenditures_url <- "https://www.dropbox.com/s/z6gw9lvve6jogi5/Expends2002.txt?raw=1"
+df <- read.csv(expenditures_url)
+```
+
+
+# Question 1--Working with logicals
+
+Use R code to answer the following questions.
+
+## 1a
+
+Are any `Amount` values missing?
+
+```{r}
+#code here
+```
+
+Answer:
+
+No, there are no `NA` values in the variable.
+
+```{r}
+any(is.na(df$Amount))
+```
+
+## 1b
+
+How many observations are for refunds?  
+
+Hint: Read the codebook carefully for the `Amount` variable.
+
+```{r}
+#code here
+```
+
+Answer:
+
+276 observations are for refunds.
+
+```{r}
+sum(df$Amount < 0)
+```
+
+## 1c
+
+What are the row indices for observations that indicate an amount spent of \$1,000,000 or more?
+
+```{r}
+#code here
+```
+
+Answer:
+
+The following six rows spent 1million or more.
+
+```{r}
+which(df$Amount >= 1000000)
+```
+
+## 1d
+
+Double check that all of the `Cycle` values equal 2002.
+
+```{r}
+#code here
+```
+
+Answer:
+
+Lots of ways to do this!
+
+```{r}
+sum(df$Cycle != 2002)
+all(df$Cycle == 2002)
+unique(df$Cycle)
+```
+
+## 1e
+
+How many observations are for "Club for Growth OR the "Madison Project" OR the "Republican National Cmte"?
+
+
+```{r}
+#code here
+```
+
+Answer:
+
+1337 observations are for expenditures for one of the three listed filing committees.
+
+```{r}
+sum(df$Pacshort == "Club for Growth" | 
+      df$Pacshort == "Madison Project" | 
+      df$Pacshort == "Republican National Cmte")
+
+# more elegantly
+sum(df$Pacshort %in% c("Club for Growth", "Madison Project", "Republican National Cmte"))
+```
+
+
+
+# Question 2--Working with dataframes
+
+## 2a
+
+Using R functions, describe the following properties of the `df` object: class, dimensions, columnnames, rownnames, and anything else you think is pertinent.
+
+```{r}
+#code here
+```
+
+Answer:
+
+There are multiple ways to answer this question.  I used the `str()` function which tells me the object is a data.frame with 20,000 rows (observations) and 21 columns (variables).  This function is handy because it also gives an overview of each variable's class.  For example, I can see the `Cycle` variable is integer numeric, but the `Zip` is a character vector which I might have expected to also be numeric.
+
+```{r}
+str(df)
+```
+
+
+## 2b
+
+For the `TransID` variable, change its column name to `Useless_Var`.
+
+Bonus: If you want to challenge yourself, try to write code that is flexible, meaning it will work correctly if `TransID` is the 3rd variable, 20th variable, or any position in the dataframe.
+
+```{r}
+#code here
+```
+
+Answer:
+
+While I could "hard-code" in the third position index, a better way would be to keep the code flexible in case something happens and this isn't the third variable next time I use this dataset.
+
+```{r}
+colnames(df)[colnames(df) == "TransID"] <- "Useless_Var"
+
+# Also okay, but keep in mind we're trying to move beyond this:
+#colnames(df)[3] <- "Useless_Var" 
+```
+
+
+## 2c
+
+Remove the variables `Useless_Var` and `Source` from the dataframe.
+
+Bonus: Make this code flexible as well.
+
+```{r}
+#code here
+```
+
+Answer:
+
+```{r}
+# This solution stems from class materials:
+rm_idx <- c(which(colnames(df) == "Useless_Var"),
+             which(colnames(df) == "Source"))
+df <- df[,-rm_idx]
+
+# A more efficient line of code would use the %in%
+# function, but we haven't covered that yet.
+# rm_idx <- which(colnames(df) %in% c("Useless_Var", "Source"))
+# df <- df[,-rm_idx]
+```
+
+## 2d
+
+The variable `State` has many obvious errors. I've created the variable `StateWrong` with `NA` placeholders.  Recode `StateWrong` to be `TRUE` if the `State` variable contains an error or a missing value, and `FALSE` otherwise.  
+
+Hint: We did a recoding exercise in the inclass activity.
+
+Bonus: Try to use the `%in%` function.  We haven't used it in class yet.  It is similar to `==`.  The syntax is `x %in% y`, which assesses each value of vector `x` and asks, is it equal to any of the values in vector `y`?  I've included a simple example below.
+
+
+```{r}
+df$StateWrong <- NA
+
+# Example of %in%
+# In words: For each letter in the alphabet,
+# check if it is it equal (TRUE) or not (FALSE)
+# to A, D, or F
+x <- LETTERS
+y <- c("A", "D", "F")
+x %in% y
+```
+
+Answer:
+
+```{r}
+sort(table(df$State))
+any(is.na(df$State))
+bad_state_vals <- c("  ", "St", "ZZ", "LL", "VI", "AS", "GU")
+df$StateWrong[df$State %in% bad_state_vals] <- TRUE
+df$StateWrong[!df$State %in% bad_state_vals] <- FALSE
+# double check 50 states + DC
+length(unique(df$State[!df$StateWrong]))
+```
+
+## 2e
+
+Using the `StateWrong` variable, report how many observations in the dataset have a wrong or missing value. Then remove these observations.  Confirm that you've removed the correct number of rows by checking the dimensions of the data.
+
+```{r}
+#code here
+```
+
+Answer:
+
+91 observations are incorrect or missing
+
+```{r}
+# Lots of ways to report number 
+table(df$StateWrong)
+sum(df$StateWrong)
+
+# remove observations
+df <- df[!df$StateWrong, ]
+
+# new dimensions less 91 rows
+dim(df)
+```
+
+
+## 2f
+
+Create the variable in the dataframe called `Payroll`.  It should be a logical indicating whether the `Descrip` variable contains the string "payroll" *regardless* of capitalization.  Report the number of `TRUE` values in this variable.
+
+Hint: Use the grepl function and read the helpfile closely.
+
+```{r}
+#code here
+```
+
+Answer:
+
+"payroll" appears in 466 observations.
+
+```{r}
+df$Payroll <- grepl(pattern = "payroll", x = df$Descrip, ignore.case = T)
+sum(df$Payroll)
+```
+
+
+## 2g
+
+Write a function named `sum_state_exp` that takes one character argument called `state_code`.  The function should return the mean amount of expenditures in given state.
+
+```{r}
+# Write function
+
+# After writing the function, run it for IA, IL, and CA
+# sum_state_exp(state_code = "IA")
+# sum_state_exp(state_code = "IL")
+# sum_state_exp(state_code = "CA")
+```
+
+Answer:
+
+```{r}
+sum_state_exp <- function(state_code){
+  sum(df$Amount[df$State == state_code])
+}
+
+sum_state_exp(state_code = "IA")
+sum_state_exp(state_code = "IL")
+sum_state_exp(state_code = "CA")
+```
+
+
