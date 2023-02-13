@@ -39,12 +39,9 @@ For $N$ observations indexed by $i$, the equation for RMSE is:
 $$RMSE = \sqrt{\frac{\sum^{N}_{i=1}\left( \hat{y}_{i} - y_{i} \right)^{2}}{N}}$$
 
 ```{r}
-sample_var <- function(y){ 
-  yhat <- (fitted.values(y))
-  n <- length(y)
-  ss <- sum((y-yhat)ˆ2) 
-  RMSE <- sqrt(ss/n) 
-  return(sample_var)
+rmse <- function(y, lm_obj){
+  ssr <- sum((lm_obj$fitted.values - y)ˆ2) 
+  return(sqrt(ssr / length(y)))
 }
 ```
 
@@ -53,7 +50,8 @@ sample_var <- function(y){
 Run a bivariate regression with `x1` as the predictor and `y` as the outcome, and then run your `rmse` function using the fitted model.
 
 ```{r}
-#code here
+mod <- lm(y ~ x1, data = df)
+rmse(y = df$y, lm_obj = mod)
 ```
 
 
@@ -62,7 +60,11 @@ Run a bivariate regression with `x1` as the predictor and `y` as the outcome, an
 Write a for loop that loops over `x1`, `x2`, and `x3`, calculating a bivariate regression in each iteration, and then calling the `rmse` function you wrote in 1a.  Have your loop print the `rmse` output.
 
 ```{r}
-#code here
+for(x in c("x1", "x2", "x3")){
+  equ <- paste0("y ~ ", x)
+  model <- lm(equ, data = df)
+  print(rmse(y = df$y, lm_obj = model))
+}
 ```
 
 ## 1d
@@ -70,7 +72,11 @@ Write a for loop that loops over `x1`, `x2`, and `x3`, calculating a bivariate r
 Turn your for loop into a function such that for **any** `x` and `y`, the function runs a bivariate regression, it runs your `rmse` function, and it returns the single RMSE output.
 
 ```{r}
-#code here
+my_function <- function(x, y){
+  model <- lm(y ~ x)
+  return(rmse(y = df$y, lm_obj = model))
+}
+my_function(x = df$x1, y = df$y)
 ```
 
 

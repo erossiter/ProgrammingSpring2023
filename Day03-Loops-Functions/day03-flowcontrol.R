@@ -103,7 +103,7 @@ repeat{
   print(x)
   x <- x + 1
   if (x == 5) { 
-    break #notice this is a function
+    break #notice this is a function- this stops R from running the code forever
   }
 }
 
@@ -139,7 +139,8 @@ vote_df <- data.frame(vap = vap, tv = tv)
 vote_df$vpct <- vote_df$tv / vote_df$vap
 
 # vectorized
-vote_df$vpct_dummy <- ifelse(vote_df$vpct > .4, T, F)
+vote_df$vpct_dummy <- ifelse(vote_df$vpct < .3, "low",
+                             ifelse(vote_df$vpct > .5, "high", "medium"))
 head(vote_df)
 
 if(vote_df$tv[2] < 1000000){
