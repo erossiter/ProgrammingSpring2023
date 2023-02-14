@@ -119,9 +119,13 @@ Write a for loop that calls your simplified Monty Hall Problem function 1000 tim
 
 ```{r}
 
-monty_hall = for (x in 1000){
-             cat(choice(1), "\n")
+monty_hall <- rep(NA, 1000)
+
+for (i in 1:1000) {
+  participant_chooses <- "Door 1"
+  monty_hall[i] <- choice(as.numeric(gsub("Door ", "", participant_chooses)))
 }
+
 table(monty_hall)
 
 ```
