@@ -35,7 +35,7 @@ states <- c("Indiana", "Illinois", "Iowa", "Minnesota", "Ohio")
 all_tables <- vector("list", length = 5)
 for(i in 1:5){
   # download
-  url <- states_urls <- paste0("https://ballotpedia.org/Presidential_election_in_",
+  url <- paste0("https://ballotpedia.org/Presidential_election_in_",
                                states[i],
                                ",_2020")
   html <- read_html(url)
@@ -111,7 +111,9 @@ arkansas_html %>%
 # See the heading entitled "Democratic primary election"?
 # Get all the elements of the same class
 # get just the `div` elements of class `electionsectionheading`
-
+arkansas_html %>% 
+  html_nodes('div') %>% 
+  html_text()
 
 # Try it:
 # See the heading entitled "Footnoes" at the bottom?
