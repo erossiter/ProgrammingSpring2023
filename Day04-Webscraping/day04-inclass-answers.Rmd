@@ -74,6 +74,6 @@ for(i in 1:nrow(faculty_df)){
     faculty_df$office_hours[i] <- p_tags[idx]
   }
 }
-head(faculty_df)
+write.csv(faculty_df, file = "faculty_df_answer.csv")
 ```
 
