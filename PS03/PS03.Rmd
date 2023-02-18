@@ -51,6 +51,9 @@ while (heads < 3) {
 
 ```
 
+ELR note: really nice solution! I was confused by the name `heads` at first, like... really confused! But I see how it works after thinking for a second :). A better name for that object might have been... `running_count` or something...
+
+
 # Question 2--Functions
 
 In the game show [Let’s Make a Deal,](https://en.wikipedia.org/wiki/Let%27s_Make_a_Deal) participants choose one of three closed
@@ -99,6 +102,7 @@ choice <- function(door){
 
 ```
 
+Elr note: nice!
 
 ## 2b
 
@@ -202,6 +206,12 @@ Answer: I think I can scrape a PDF for key words and am expecting to being to ma
 
 My concern... will this be too simple for a final project for this class?
 I have like 20 pdfs that I could use and go through and produce a database as a final deliverable. 
+
+ELR Note: I'm not sure about the "too simple" question.  I need more info about the context. What do these pdf's look like?  Good quality or bad scans? Are there tables inside you want to extract, or is it all text? Do you already have them downloaded or are they online somewhere?
+
+In reality, I'm guessing you wouldn't need to do something super systematic with only 20 pdf's -- just read them.  However, if you want to use this as the means to devleop these skills, I'm not against that.  It would just be a toy example, which is fine.  However, it would be more interesting to find a different information source that actually requires these skills to make the task manageable, you know?  But, if this is something that would impress your job, I'm all for supporting that.  These are the things I'd consider if I were you.  Keep me posted as needed.
+
+I'll also note that it sounds like a "text extraction" project, not a "scraping" project per se.  I note this because it will help you google for tools and solutions.
 
 
 
