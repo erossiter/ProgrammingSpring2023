@@ -1,0 +1,55 @@
+---
+title: "Problem Set 4"
+date: "Due February 21, 2023"
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+- Read all of these instructions closely.
+- This problem set is due Tuesday, February 21, 2023 at 4pm.
+- Submit files via Github:
+  1. the .Rmd (R Markdown) file
+  2. the knitted .pdf file
+  3. anything else the particular problem set might require
+- Use a copy of this file, perhaps with your name or initials appended to the file name, to write your answers to the questions. You'll see there is a designated space where your answers should begin.
+- Knitting the .Rmd file to a .pdf file *as you work* will ensure your code runs without errors and is working how you expect.  Knit early and often.  You've already read the instruction that a knitted .pdf is required when you submit.
+- Per the syllabus, I will not accept any late work.  Keep in mind the two lowest problem set scores are dropped.  Turn in what you have.
+- Clarification on the expectations for problem set submissions (posted in Slack, copied here):
+  - Always print the output of the code I'm requesting.
+    - Ex: If I want you to create a vector x with elements 1 through 10, print x after creating it so I can see it worked.
+  - Write any written answers in the space outside the code chunk, not inside with an R comment. 
+    - R comments are great to clarify code, but not for answering the question.
+  - Make sure any code or written content is not cut off in the pdf.
+    - This really should only apply to code, because if you follow item 2 in this list, the pdf will compile your written answers nicely.
+
+\newpage
+# Question 1--Webscraping
+
+This problem set has only one question.  Our goal is to scrape certain contact info for all Notre Dame political science core faculty.  This activity will ask you to navigate across webpages, find the information of interest within each page, store it in a dataframe in R, and then write the dataframe to a csv.
+
+The information you need to scrape for each of the 50 core faculty members is:
+
+- link to their ND webpage (done during inclass activity)
+- name
+- title (e.g., Assistant Professor, Associate Professor, etc.)
+- fields of study
+- office hours (done during inclass activity)
+- office location (optional! this one is tricky)
+- phone
+- email
+
+Each of these pieces of information should be stored in a separate column in an R dataframe.
+
+Additional problem set details:
+
+- Include short, informative R comments describing your code as needed.
+- If you prefer, you can complete this problem set in an R script (.R file).  Since this problem set doesn't require any any written answers and is one large task, an .R file might be easier than a .Rmd file.  It's your choice. *Therefore, a knitted pdf is not required for this assignment*
+- In addition to the R code, you must submit a .csv file containing the scraped information.  I recommend the `write.csv` function and included an example of using it in my version of the Day04 in class activity.
+
+
