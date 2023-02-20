@@ -1,0 +1,70 @@
+---
+title: "webscraping"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write the R code to answer the following questions. You have until the beginning of next class to answer all of the questions below and commit to GitHub, both the .Rmd file and the .pdf.
+
+# Overview
+
+Our goal is to scrape the office hours of all Notre Dame political science faculty.  This activity will ask you to nagivate across webpages, find the information of interest within each page, and store it in a dataframe.
+
+While our goal for now is to scrape just the office hours of the faculty, note that this week's problem set will ask you scrape more of the listed details on each page and organize them into a dataframe.
+
+# Question 1
+
+Our first step is to be able to navigate to each faculty member's page.  Write code to extract the links for each faculty member's page from the provided html.  Print your vector of strings.  There should be 50.
+
+```{r}
+library(rvest)
+url <- "https://politicalscience.nd.edu/people/core-faculty/"
+html <- read_html(url)
+
+vector <- html %>% 
+  html_nodes('h2.faculty-item-name') %>% 
+  html_nodes('a') %>% 
+  html_attr('href')
+```
+
+# Question 2
+
+Investigate these links and how the website is structured.  Before writing any code, briefly describe in words the kind of code you'll write to accomplish our goal of navigating to each faculty member's page, selecting the office hours information, and saving it to a dataframe.
+
+I will have to make a list inclusive of each url extension attached
+
+
+
+# Question 3
+
+Implement the code you described in words in Question 2.  I've provided the structure of a dataframe in which I'd like you to add the office hours information.
+
+```{r}
+ps <- "https://politicalscience.nd.edu"
+faculty_df <- data.frame("link" = vector, # put your vector from Question 1 here!
+                         "office_hours" = NA)
+
+for(x in 1:nrow(faculty_df)){
+  url <- paste0(ps, faculty_df$link[x])
+  html <- read_html(url)
+  list2 <- html %>%
+    html_nodes('div.faculty-details') %>%
+    html_nodes('p') %>%
+    html_text2()
+  office_hours <- which(grepl("Office Hours", list2))
+  if(length(office_hours) == 0){
+    next
+  }else{
+    faculty_df$office_hours[x] <- list2[x]
+  }
+}
+
+print(x)
+
+
+```
+
