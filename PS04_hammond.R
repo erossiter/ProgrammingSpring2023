@@ -20,7 +20,6 @@ faculty_df<- data.frame("link" = websites,
                 "title" = NA,
                 "field of study" = NA,
                 "office hours" = NA,
-                "office location" = NA,
                 "phone" = NA,
                 "email" = NA)
 
