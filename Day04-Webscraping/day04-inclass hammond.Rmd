@@ -45,26 +45,23 @@ Implement the code you described in words in Question 2.  I've provided the stru
 
 ```{r}
 ps <- "https://politicalscience.nd.edu"
-faculty_df <- data.frame("link" = vector, # put your vector from Question 1 here!
+df <- data.frame("link" = vector, # put your vector from Question 1 here!
                          "office_hours" = NA)
 
-for(x in 1:nrow(faculty_df)){
-  url <- paste0(ps, faculty_df$link[x])
+for(i in 1:nrow(df)){
+  url <- paste0(ps, df$link[i])
   html <- read_html(url)
-  list2 <- html %>%
+  p_tags <- html %>%
     html_nodes('div.faculty-details') %>%
     html_nodes('p') %>%
     html_text2()
-  office_hours <- which(grepl("Office Hours", list2))
-  if(length(office_hours) == 0){
+  office_hours <- which(grepl("Office Hours", p_tags))
+  if(length(idx) == 0){
     next
   }else{
-    faculty_df$office_hours[x] <- list2[x]
+    df$office_hours[i] <- p_tags[idx]
   }
 }
-
-print(x)
-
-
+View(faculty_df)
 ```
 

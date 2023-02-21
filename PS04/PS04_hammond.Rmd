@@ -1,5 +1,5 @@
 ---
-title: "Problem Set 4"
+title: "Max Hammond, Problem Set 4"
 date: "Due February 21, 2023"
 output: pdf_document
 urlcolor: blue
