@@ -106,14 +106,22 @@ for(i in 1:nrow(faculty_df)){
 for(i in 1:nrow(faculty_df)){
   url <- paste0(base_url, faculty_df$link[i])
   html <- read_html(url)
-  email <- html %>%
-    html_nodes(xpath = '//*[@id="content"]/div/main/div[1]/p[7]/a')
-    faculty_df$email[i] <- email
+  email_tags <- html %>% 
+    html_nodes('div.faculty-details') %>% 
+    html_nodes('a') %>% 
+    html_text()
+  idx2 <- which(grepl('@nd.edu', email_tags))
+  if(length(idx2) == 0){
+    next
+  }else{
+    faculty_df$email[i] <- email_tags[idx2]
+  }
 }
 
 
 View(faculty_df)
-
+library(openxlsx)
+write.xlsx(faculty_df, file = "/Users/maxhammond/Documents/Notre Dame/R/Programming/Rlab/ps04_hammond.xlsx")
 
 
 
