@@ -6,18 +6,17 @@
 
 # Install package from GitHub ------------
 
-#install.packages("devtools")
-#library(devtools)
-#install_github("willdebras/googlecivic")
+install.packages("devtools")
+library(devtools)
+install_github("willdebras/googlecivic")
 library(googlecivic)
 
-# Set up your API Key ----------------
+# Set up your API Key: 
 
 # run this line, it should open a file
 usethis::edit_r_environ() 
 
 # put this line in the file, with your key
-google_civic_api="xxxxxxxxxxxxx"
 
 # restart R like it prompts
 
