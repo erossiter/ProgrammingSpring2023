@@ -7,9 +7,10 @@ urlcolor: blue
 
 ```{r setup, include=FALSE}
 # REMOVE root.dir from what I distribute
-knitr::opts_chunk$set(echo = TRUE, root.dir = "~/documents/Github/ProgrammingSpring2023")
-knitr::opts_knit$set(root.dir = "~/documents/Github/ProgrammingSpring2023")
+knitr::opts_chunk$set(echo = TRUE,"/Users/maxhammond/Documents/Notre Dame/R/Programming/Rlab/PSO5")
+knitr::opts_knit$set("/Users/maxhammond/Documents/Notre Dame/R/Programming/Rlab/PS05")
 ```
+
 
 ## Instructions
 
@@ -182,9 +183,7 @@ for(s in state.abb){
   try(
     full_data <- rbind.data.frame(full_data,scrape_state(s)))
 }
-#   # I recommend implementing this function
-#   # to store results
-#   rbind.data.frame()
-# }
+
+dim(full_data)
 ```
 
