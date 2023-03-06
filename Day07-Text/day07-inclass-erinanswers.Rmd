@@ -1,0 +1,98 @@
+---
+title: "Text and regular expressions"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write the R code to answer the following questions. You have until the beginning of next class to answer all of the questions below and commit to GitHub.  **It's okay if you want to do this in a .R script.  Because the data is so large, the code might run slowly, and you might not want to knit.**
+
+# Overview
+
+We will continue using the 'tweets' data from class containing mayor Tweets.  As a reminder, these are data shared with me.  Please do not use beyond class without inquiring with me further, and do not post publicly.
+
+# Question 1
+
+- Subset down to all of the tweets from Mayor Lyda Krewson (STL Mayor 2017 – 2021)
+- Find the mean number of words in her tweets. Find the total number of unique words.
+
+```{r}
+# read in data
+library(tidyverse)
+tweets <- read_csv("https://www.dropbox.com/s/rnaaglg5eaeou6s/Tweets.csv?dl=1")
+
+# figure out her handle
+any(grepl("krewson", tweets$ScreenName))
+unique(tweets$ScreenName[grepl("krewson", tweets$ScreenName)])
+
+# subset to her tweets
+lk <- tweets[tweets$ScreenName == "lydakrewson", ]
+
+# split at spaces
+split_txt <- str_split(lk$Text, pattern = " ")
+
+# count length of each text in list
+txt_length <- lapply(split_txt, length)
+
+# unlist, then find mean of the lengths
+mean(unlist(txt_length), na.rm = T)
+```
+
+
+
+# Question 2
+
+- Come up with your own approach for searching for a dictionary of words to find Tweets relevant to some concept, such as policing, schooling, climate change, gun violence, etc.  It's up to you.  This isn't a dissertation project, so just try to look for a concept using our new regex skills.  It won't be perfect measurement, and that's totally fine.
+
+- Then, for each mayor in the dataset (N=572), what number of tweets match your criteria?  Or, you might look at the proportion that match instead. Plot a histogram of the results using the `hist` function.
+
+```{r}
+library(stringr)
+dict <- c("school", "educ", "student", "teacher", "class")
+dict_regex <- paste0(dict, collapse = "|")
+dict_regex <- paste0("(?i)", dict_regex)
+dict_regex
+```
+
+```{r}
+# Look at my dictionary with some test strings
+test_strings <- c("Schooling is important!", "Our kids need to get a good education.")
+str_view_all(test_strings, pattern = dict_regex)
+```
+
+```{r}
+# First do it with Krewson
+out <- str_subset(lk$Text, pattern = dict_regex)
+length(out)
+head(out)
+
+# Create an empty dataframe for storage
+# It includes the unique screenname for each mayor
+educ_df <- data.frame(mayors = unique(tweets$ScreenName),
+                      n_tweets = NA,
+                      n_educ_tweets = NA)
+
+# Loop over each mayor
+for(i in 1:nrow(educ_df)){
+  # df of just mayor's tweets
+  m_tweets <- tweets$Text[tweets$ScreenName == educ_df$mayors[i]]
+  # store how many total
+  educ_df$n_tweets[i] <- length(m_tweets)
+  # store how many match my regex
+  educ_df$n_educ_tweets[i] <- length(str_subset(m_tweets, pattern = dict_regex))
+}
+
+# Plot results
+hist(educ_df$n_educ_tweets/educ_df$n_tweets,
+     main = "Proportion of Education Tweets",
+     xlab = "")
+
+# Who is that outlier?
+which(educ_df$n_educ_tweets/educ_df$n_tweets > .25)
+educ_df[139,]
+```
+
+
