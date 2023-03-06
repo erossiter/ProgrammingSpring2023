@@ -39,7 +39,7 @@ lm_output <- lm(Y ~ X)
 Answer:
 
 ```{r}
-print(lm_output[1])
+print(lm_output[1:3])
 
 ```
 
@@ -49,7 +49,7 @@ In words, what is the **class,** or type of data, that you printed in 1a? It is 
 
 
 ```{r}
-class <- lm_output[1]
+class <- lm_output[1:3]
 is.list(class)
 
 ```
@@ -64,7 +64,7 @@ In words, what is the **data structure** that you printed in 1a? It is not requi
 
 
 ```{r}
-class <- lm_output[1]
+class <- lm_output[1:3]
 str(class)
 
 ```
