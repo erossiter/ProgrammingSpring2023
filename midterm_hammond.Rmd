@@ -100,8 +100,7 @@ Answer:
 
 ```{r}
 myfunction <- function(data){
-if (is.na(data))
-    return("NA")
+length(which(is.na(vec)))
 }
 ```
 
@@ -113,6 +112,6 @@ Answer:
 
 ```{r}
 vec <- c(1, 10, NA, NA, 12)
-cat(myfunction(vec))
+myfunction(vec)
 ```
 
