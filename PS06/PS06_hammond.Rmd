@@ -7,6 +7,8 @@ urlcolor: blue
 
 ```{r setup, include=FALSE}
 # REMOVE root.dir from what I distribute
+knitr::opts_chunk$set(echo = TRUE, root.dir = "~/documents/Github/ProgrammingSpring2023")
+knitr::opts_knit$set(root.dir = "~/documents/Github/ProgrammingSpring2023")
 ```
 
 ## Instructions
