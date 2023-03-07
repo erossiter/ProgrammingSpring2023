@@ -43,6 +43,8 @@ print(lm_output[1])
 
 ```
 
+ELR Note: see answer key, need double brackets
+
 ## 1b
 
 In words, what is the **class,** or type of data, that you printed in 1a? It is not required, but you can also use code to justify your answer.
@@ -56,7 +58,7 @@ is.list(class)
 The type of data is 
 Answer: A list
 
-
+ELR Note: see answer key, need double brackets, its numeric
 
 ## 1c
 
@@ -70,6 +72,9 @@ str(class)
 ```
 
 Answer: The data structure of this list is made up of a series of arrays
+
+ELR Note: see answer key, need double brackets, its a vector, which you do mention here I think by saying "made up of a series of arrays"
+
 
 
 # Question 2
@@ -87,6 +92,8 @@ for(i in 1:nrow(cars)){
 ```
 
 Answer: 'cars' is a dataframe of 50 observations with varying degrees of speed and distance traveled. I assume the measurements are all for the same car. The for loop here is saying that for each observation (each interval or measurement), if the car's speed is equal to the minimum speed in that variable (4 in this case) then display (print) "Stopping distance (in feet) for slowest car(s) in the dataset" as well as the distance traveled below it. This happened twice at observations 2 and 10.
+
+ELR Note: good, last sentence isn't quite right, it prints the stopping distance for the slowest cars (not their index value).
 
 
 
