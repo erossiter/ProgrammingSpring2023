@@ -33,13 +33,25 @@ lm_output <- lm(Y ~ X)
 
 `lm_output` is a list, containing regression model output.  Print only the first element of this list.
 
-Answer:
+Answer: This is how we learned in class to access each element of the list.
 
 ```{r}
 #answer here
 lm_output[[1]]
+# or
 lm_output$coefficients
 ```
+
+This question assesses if you know how to access elements of a list, which as we discussed in class, is different than accessing elements of a vector.  With a vector, we can use single brackets `[]`.  However, with lists, we need to use double brackets `[[]]`.  
+
+Using only the single brackets `[]` is not appropriate for getting *only* the first element of `lm_output` because they don't remove the element from the structure of the list, which we can see if we use the `class()` or `is.list()` functions.  Even though can see the first element of the list is a length 2 numeric vector, these functions show we didn't quite access just that element, because they show we're still working with a list.
+
+```{r}
+lm_output[1]
+is.list(lm_output[1])
+class(lm_output[1])
+```
+
 
 ## 1b
 
@@ -47,10 +59,12 @@ In words, what is the **class,** or type of data, that you printed in 1a? It is 
 
 Answer:
 
-It is of class numeric.
+It is of class numeric.  We can see that when we print the data in 1a (it is numbers), or we can use the `class()` or `is.numeric()` functions.  We could even use the `str` function, like we did in class, that describes each element of the list.  The first element is named `coefficients` and contains a length 2 numeric vector: `num [1:2] 7.796 -0.623`
 
 ```{r}
 class(lm_output[[1]])
+is.numeric(lm_output[[1]])
+str(lm_output)
 ```
 
 
@@ -60,10 +74,11 @@ In words, what is the **data structure** that you printed in 1a? It is not requi
 
 Answer:
 
-It is a vector.
+It is a vector. We can also see it is a vector using the `str` function, showing that is is a length 2 vector: `num [1:2]`.
 
 ```{r}
 is.vector(lm_output[[1]])
+str(lm_output)
 ```
 
 # Question 2
@@ -97,7 +112,7 @@ Answer:
 ```{r}
 #answer here
 na_function <- function(vec){
-  sum(is.na(vec))
+  return(sum(is.na(vec)))
 }
 ```
 
