@@ -1,0 +1,103 @@
+---
+title: "Max Hammond, Problem Set 6"
+date: "Due March 7, 2023"
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+# REMOVE root.dir from what I distribute
+```
+
+## Instructions
+
+- Read all of these instructions closely.
+- This problem set is due Tuesday, March 7, 2023 at 4pm.
+- Submit files via Github:
+  1. the .Rmd (R Markdown) file
+  2. the knitted .pdf file
+  3. anything else the particular problem set might require
+- Use a copy of this file, perhaps with your name or initials appended to the file name, to write your answers to the questions. You'll see there is a designated space where your answers should begin.
+- Knitting the .Rmd file to a .pdf file *as you work* will ensure your code runs without errors and is working how you expect.  Knit early and often.  You've already read the instruction that a knitted .pdf is required when you submit.
+- Per the syllabus, I will not accept any late work.  Keep in mind the two lowest problem set scores are dropped.  Turn in what you have.
+- Clarification on the expectations for problem set submissions (posted in Slack, copied here):
+  - Always print the output of the code I'm requesting.
+    - Ex: If I want you to create a vector x with elements 1 through 10, print x after creating it so I can see it worked.
+  - Write any written answers in the space outside the code chunk, not inside with an R comment. 
+    - R comments are great to clarify code, but not for answering the question.
+  - Make sure any code or written content is not cut off in the pdf.
+    - This really should only apply to code, because if you follow item 2 in this list, the pdf will compile your written answers nicely.
+
+
+# Question 1--Crowdsourcing API Knowledge
+
+This problem set has one question.  Find an API you're interested in that was not demonstrated in one of the class R scripts.  Your end goal is to demonstrate its functionality by sending a few requests to the API and presenting what is returned.
+
+The idea is that the class is going to crowdsource a good API knowledgebase. As you know, I feel that an important and distinctive feature of your life as a programmer is having a community of other programmers and lots of online resources to turn to!  This problem set creates another opportunity for you to turn to your classmates (and their code) as a resource in the future.
+
+The API you choose may or may not have an R wrapper.  If the API does not have an R wrapper, you can practice making http requests like in class (you should do a thorough search of Google and Github to make sure there is no R wrapper).  If the API does have an R wrapper, you can use that.
+
+The learning curve can be steep when using a new API.  You'll have to read the API documentation in order to possibly sign up for an account and access secret keys.  In any case, you'll have to read the documentation to learn how to structure your requests and understand the structure of the data returned.
+
+Please write succinct narration for what you're doing so a classmate could look at your compiled pdf and have a good place to start with learning the API you chose.  It does not have to be a full, polished vignette like [this](https://tylerburleigh.com/blog/mturk-qualification-tests/), for example, but you should do the following as applicable:
+
+- Write a short summary of what the API does and what is useful for (e.g., the Google Cloud Speech to Text API takes audio files as inputs, uses a model they've trained to transcribe the audio to text, and returns the text among other outputs)
+  - provide a link to API documentation
+https://developer.spotify.com/dashboard/applications/c0a8099de912475f8e18cc29035360e3/users
+  - provide a link to the R wrapper
+devtools::install_github('charlie86/spotifyr')
+  - provide links to any other online resources you found helpful
+https://www.rcharlie.com/spotifyr/
+https://www.caitlinhudon.com/posts/2017/12/22/blue-christmas 
+https://msmith7161.github.io/what-is-speechiness/ 
+  - discuss if a secret key was necessary, how you set it
+It is necessary. You are given a client key and a secret key which you can rotate.
+  - discuss any other necessary set up
+You need a spotify account thats it. It does not need to be a premium subscription.
+  - discuss any costs associated with the API
+Free
+- Make a few requests to the API
+```{r}
+#devtools::install_github('charlie86/spotifyr')
+library(spotifyr)
+#note here, I won't share my keys for security purposes, but I had to directly input my key even after placing it into my env and restarting R. 
+Sys.setenv(SPOTIFY_CLIENT_ID = 'spotify_client')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = 'spotify_secret')
+access_token <- get_spotify_access_token()
+
+badbunny <- get_artist_audio_features('bad bunny')
+library(tidyverse)
+library(knitr)
+#this allows me to see which keys are used most often by bad bunny
+
+badbunny %>% 
+    count(key_mode, sort = TRUE) %>% 
+    head(5) %>% 
+    kable()
+
+#this allows me to get the lowest valence (joyfulness) song by ed sheeran. 
+edsheeran <- get_artist_audio_features('ed sheeran')
+edsheeran %>% 
+    arrange(-valence) %>% 
+    select(track_name, valence) %>% 
+    head(5) %>% 
+    kable()
+
+#To see for the ones with the least energy, use energy
+frank <- get_artist_audio_features('frank ocean')
+frank %>% 
+    arrange(energy) %>% 
+    select(track_name, energy) %>% 
+    head(5) %>% 
+    kable()
+
+```
+- Interpret the output of your requests
+
+This code interprets the top 5 key notes that bad bunny uses in his songs. Using 'get_track_audio_features' I can also pull a ton of information songs such as their valence and energy levels. I pulled the top 5 songs with the highest valence for ed sheeran and lowest energy levels for frank ocean according to spotify. I used Charlie Thompson’s fantastic spotifyr package to interface with the Spotify API. 
+
+
+
+
+
+
