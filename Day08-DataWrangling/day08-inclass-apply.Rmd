@@ -1,0 +1,42 @@
+---
+title: "apply family"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write the R code to answer the following questions. You have until the beginning of next class to answer all of the questions below and commit to GitHub.
+
+
+
+# Question 1
+
+Use an apply function instead of a for loop to create a vector containing the following elements: "num1", "num2", ... "num100"
+
+```{r}
+#code here
+```
+
+
+
+# Question 2
+
+Use a function in the "apply" family to find the fastest stopping speed for each group of cars, where the cars are grouped by their stopping distance
+```{r}
+data(cars)
+#code here
+```
+
+# Question 3
+
+Using an apply function, find the means for each column in the `cars` dataset.
+
+```{r}
+#code here
+```
+
+
+

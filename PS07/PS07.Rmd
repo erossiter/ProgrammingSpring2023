@@ -1,0 +1,50 @@
+---
+title: "Problem Set 7"
+date: "Due March 21, 2023"
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+# REMOVE root.dir from what I distribute
+knitr::opts_chunk$set(echo = TRUE, root.dir = "~/documents/Github/ProgrammingSpring2023")
+knitr::opts_knit$set(root.dir = "~/documents/Github/ProgrammingSpring2023")
+```
+
+## Instructions
+
+- Read all of these instructions closely.
+- This problem set is due Tuesday, March 21, 2023 at 4pm.
+- Submit files via Github:
+  1. the .Rmd (R Markdown) file
+  2. the knitted .pdf file
+  3. anything else the particular problem set might require
+- Use a copy of this file, perhaps with your name or initials appended to the file name, to write your answers to the questions. You'll see there is a designated space where your answers should begin.
+- Knitting the .Rmd file to a .pdf file *as you work* will ensure your code runs without errors and is working how you expect.  Knit early and often.  You've already read the instruction that a knitted .pdf is required when you submit.
+- Per the syllabus, I will not accept any late work.  Keep in mind the two lowest problem set scores are dropped.  Turn in what you have.
+- Clarification on the expectations for problem set submissions (posted in Slack, copied here):
+  - Always print the output of the code I'm requesting.
+    - Ex: If I want you to create a vector x with elements 1 through 10, print x after creating it so I can see it worked.
+  - Write any written answers in the space outside the code chunk, not inside with an R comment. 
+    - R comments are great to clarify code, but not for answering the question.
+  - Make sure any code or written content is not cut off in the pdf.
+    - This really should only apply to code, because if you follow item 2 in this list, the pdf will compile your written answers nicely.
+
+
+# Question 1--Big Picture Project Management
+
+
+We are at the point in the semester where you should have the ball rolling on your final project. This problem set asks you to consider how to organize your coding projects, from small style suggestions to big-picture organization. This problem set does not ask much.  Instead, I expect you to use this time to make progress on your projects. So, I encourage you to complete this short problem set well ahead of the deadline.  Then, you can use what you learn from this project set when you turn to work on your projects!
+
+
+## 1a
+
+Read Bowers 2011, then write about a few takeaways from this article.  I'm most interested in you reflecting on a few ways you can improve your code or coding process.
+
+Answer:
+
+## 1b
+
+Read [this style guide](http://adv-r.had.co.nz/Style.html) for R, then write about a few takeaways from this article.  I'm most interested in you reflecting on a few ways you can improve your code or coding process.
+
+Anwer:
