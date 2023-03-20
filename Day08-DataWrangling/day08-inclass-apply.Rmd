@@ -17,7 +17,9 @@ Write the R code to answer the following questions. You have until the beginning
 Use an apply function instead of a for loop to create a vector containing the following elements: "num1", "num2", ... "num100"
 
 ```{r}
-#code here
+q1 <- lapply(1:100, function(i) paste0("num",i))
+q1
+unlist(q1)
 ```
 
 
@@ -27,7 +29,7 @@ Use an apply function instead of a for loop to create a vector containing the fo
 Use a function in the "apply" family to find the fastest stopping speed for each group of cars, where the cars are grouped by their stopping distance
 ```{r}
 data(cars)
-#code here
+tapply(cars$speed, cars$dist, min)
 ```
 
 # Question 3
@@ -35,7 +37,7 @@ data(cars)
 Using an apply function, find the means for each column in the `cars` dataset.
 
 ```{r}
-#code here
+apply(cars, 2, mean)
 ```
 
 

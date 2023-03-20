@@ -1,0 +1,42 @@
+---
+title: "dplyr"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write the R code to answer the following questions. You have until the beginning of next class to answer all of the questions below and commit to GitHub.  **It's okay if you want to do this in a .R script.  Because the data is so large, the code might run slowly, and you might not want to knit.**
+
+# Overview
+
+We will continue using the polls data from class containing presidential primary polls for the 2020 election.  As a reminder, these are data shared with me.  Please do not use beyond class without inquiring with me further, and do not post publicly.
+
+# Question 1
+
+- Filter the data so it includes only polls taken in Jan or Feb of 2019
+- Select down to only the start_date, pct, state, and candidate
+- Create a new variable that is the proportion of respondents in favor
+- Find the median level of support by state limited only to candidate/state combinations with at least 5 polls
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(readr)
+primaryPolls <- read_csv('president_primary_polls_feb2020.csv')
+primaryPolls$start_date <- as.Date(primaryPolls$start_date, "%m/%d/%y")
+View(primaryPolls)
+
+primaryPolls %>%
+  filter(start_date >= "2019-01-01" & start_date < "2019-03-01")%>%
+  select(start_date, pct, state, candidate_name)%>%
+  mutate(prop_favor = pct/100)  %>%
+  group_by(candidate_name, state) %>%
+  filter(n() >= .5) %>%
+  mutate(med_support = median(prop_favor))
+                        
+
+```
+
