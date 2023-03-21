@@ -12,15 +12,30 @@ Write the R code to answer the following questions. You have until the beginning
 
 # Overview
 
-[This FAQ](https://docs.google.com/document/d/1AFIDXn53AOEkdaGlvnpB3d73fn8EgGH_PSlWlm82bcA/pub) discusses how the data they have depends on state and local governemnts publishing their data with Voting Information Project.  They go on to say "data is generally only available relatively close to the election day (ideally 4-6 weeks before, but depending on the state that is publishing the data it can be closer)."
-
+[This FAQ](https://docs.google.com/document/d/1AFIDXn53AOEkdaGlvnpB3d73fn8EgGH_PSlWlm82bcA/pub) discusses how the data they have depends on state and local governments publishing their data with Voting Information Project.  They go on to say "data is generally only available relatively close to the election day (ideally 4-6 weeks before, but depending on the state that is publishing the data it can be closer)."
 
 ## 1a
 
 Use [this API endpoint](https://developers.google.com/civic-information/docs/v2/elections/electionQuery) to get a list of all elections they are covering right now.  There should be 3.  Note that election with ID=2000 is for testing purposes only.
 
+```{r}
+library(googlecivic)
+elec_info = get_electionid(key = Sys.getenv("google_civic_api"))
+elec_info$elections
+```
+
+
+
 
 ## 1b
+
+```{r}
+library(googlecivic)
+voter = get_voterinfo(address = "875 North Michigan Avenue, Chicago, IL 60611", 
+                      electionid = 8011, 
+                      key = Sys.getenv("google_civic_api"))
+voter$pollingLocations$address
+```
 
 One election they have info for is the Illinois Consolidated Primary Election.  Use [this endpoint](https://developers.google.com/civic-information/docs/v2/elections/voterInfoQuery) to tell the voter that lives in the Hancock Building in Chicago (875 North Michigan Avenue 60611) what their polling place is.  
 

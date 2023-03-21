@@ -1,0 +1,76 @@
+---
+title: "Max Hammond, Problem Set 7"
+date: "Due March 21, 2023"
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+# REMOVE root.dir from what I distribute
+knitr::opts_chunk$set(echo = TRUE, root.dir = "~/documents/Github/ProgrammingSpring2023")
+knitr::opts_knit$set(root.dir = "~/documents/Github/ProgrammingSpring2023")
+```
+
+## Instructions
+
+- Read all of these instructions closely.
+- This problem set is due Tuesday, March 21, 2023 at 4pm.
+- Submit files via Github:
+  1. the .Rmd (R Markdown) file
+  2. the knitted .pdf file
+  3. anything else the particular problem set might require
+- Use a copy of this file, perhaps with your name or initials appended to the file name, to write your answers to the questions. You'll see there is a designated space where your answers should begin.
+- Knitting the .Rmd file to a .pdf file *as you work* will ensure your code runs without errors and is working how you expect.  Knit early and often.  You've already read the instruction that a knitted .pdf is required when you submit.
+- Per the syllabus, I will not accept any late work.  Keep in mind the two lowest problem set scores are dropped.  Turn in what you have.
+- Clarification on the expectations for problem set submissions (posted in Slack, copied here):
+  - Always print the output of the code I'm requesting.
+    - Ex: If I want you to create a vector x with elements 1 through 10, print x after creating it so I can see it worked.
+  - Write any written answers in the space outside the code chunk, not inside with an R comment. 
+    - R comments are great to clarify code, but not for answering the question.
+  - Make sure any code or written content is not cut off in the pdf.
+    - This really should only apply to code, because if you follow item 2 in this list, the pdf will compile your written answers nicely.
+
+
+# Question 1--Big Picture Project Management
+
+
+We are at the point in the semester where you should have the ball rolling on your final project. This problem set asks you to consider how to organize your coding projects, from small style suggestions to big-picture organization. This problem set does not ask much.  Instead, I expect you to use this time to make progress on your projects. So, I encourage you to complete this short problem set well ahead of the deadline.  Then, you can use what you learn from this project set when you turn to work on your projects!
+
+
+## 1a
+
+Read Bowers 2011, then write about a few takeaways from this article.  I'm most interested in you reflecting on a few ways you can improve your code or coding process.
+
+Even in my work in stata seldom would I add comments that allowed someone else to easily interpret my code. The quote from King (1995) summarizes a problem with this point well. "If the empirical basis for an article or book can- not be reproduced, of what use to the discipline are its conclusions? What purpose does an arti- cle like this serve?" Making reproducable work is one thing, but making it make sense is an entirely other component. I honestly have not really considered this much until now. I kind of just assumed that if the code I wrote a. ran fine and b. illusrtated what I wanted it to illustarte, then all will be good and well. I will likely have to go back into some of my stata code to help map out exactly what I need to in order for someone else (who is familiar with the langauge) who has no concept of what we are doing to reproduce it and make sense of what is going on. One of my more favorite aspects of this piece was the component of working with oneself. I often forget this is just as good of enough of a reason to stay organized and clear. Bowers writes "I want my work to be credible and useful to myself and other scholars even if each article does not immediately change the world." I could not agree more with this sentimenet. They then proceed with "(1) the findings of the work should not be a matter of opinion; and (2) other people should be able to reproduce the findings. That is, the work represents a shared experience — and an experience shared without respect to the identities of others..." My internship also taught me the importance of this with a methods tab in excel even as a way to have people understand "this is everything you need to reproduce what I did."
+
+Ways to improve coding process
+•Make use of hastags 
+•Over write if neccisary 
+•Provide a README.txt file with code and writing built into it
+
+Answer:
+
+## 1b
+
+Read [this style guide](http://adv-r.had.co.nz/Style.html) for R, then write 
+about a few takeaways from this article.  I'm most interested in you reflecting 
+on a few ways you can improve your code or coding process.
+
+Answer:
+
+I have incorporated some of these strategies into my code already which was 
+great to see! The commenting guidelines that Hadley mentions I think are at the 
+top of my list. They really set the big picture of what the work entails and as 
+someone who really likes to focus on the bigger picture. 
+
+Overall things I can do to improve coding that I do not regularly do
+•Assignment should be done with "<-"
+•Line length needs to be 80 characters which can be found under the line. For
+example the line above is 78 characters and this one is 58
+•I do a lot of extra spacing it helps when code looks jumbled and sloppy
+•I am really bad at naming objects well... they need to make sense and should
+be simple and relevant. I get lost a lot when naming them
+•Move curvy brackets away from their own lines
+
+Things I do well
+•My methods for indents, spacing, and file names are in line with his!

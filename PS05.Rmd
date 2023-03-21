@@ -1,0 +1,174 @@
+---
+title: "Problem Set 5"
+date: "Due March 1, 2023"
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+# REMOVE root.dir from what I distribute
+knitr::opts_chunk$set(echo = TRUE, root.dir = "~/documents/Github/ProgrammingSpring2023")
+knitr::opts_knit$set(root.dir = "~/documents/Github/ProgrammingSpring2023")
+```
+
+## Instructions
+
+- Read all of these instructions closely.
+- This problem set is due Tuesday, March 1, 2023 at 4pm.
+- Submit files via Github:
+  1. the .Rmd (R Markdown) file
+  2. the knitted .pdf file
+  3. anything else the particular problem set might require
+- Use a copy of this file, perhaps with your name or initials appended to the file name, to write your answers to the questions. You'll see there is a designated space where your answers should begin.
+- Knitting the .Rmd file to a .pdf file *as you work* will ensure your code runs without errors and is working how you expect.  Knit early and often.  You've already read the instruction that a knitted .pdf is required when you submit.
+- Per the syllabus, I will not accept any late work.  Keep in mind the two lowest problem set scores are dropped.  Turn in what you have.
+- Clarification on the expectations for problem set submissions (posted in Slack, copied here):
+  - Always print the output of the code I'm requesting.
+    - Ex: If I want you to create a vector x with elements 1 through 10, print x after creating it so I can see it worked.
+  - Write any written answers in the space outside the code chunk, not inside with an R comment. 
+    - R comments are great to clarify code, but not for answering the question.
+  - Make sure any code or written content is not cut off in the pdf.
+    - This really should only apply to code, because if you follow item 2 in this list, the pdf will compile your written answers nicely.
+
+
+# Question 1--Computer Skills
+
+This question asks you to practice navigating file directories on your computer.  It also provides additional practice on writing efficiently for loops. 
+
+Navigating directories can be a little funky in Rmd files.  Rmd files are great for creating clean reports and problem sets, which usually don't require a lot of movement around directories.  **I want to focus on the basics, so please write your answers to Question 1 in a .R file.** Clearly label your work with comments in the .R file (1a, 1b, ...).
+
+If you would benefit from a review of working directories, I like [this resource](https://intro2r.com/work-d.html).
+
+## 1a
+
+- Write code to navigate to the course's Github folder on your computer.  We want to point R *inside* this folder.
+- Print the output of the `getwd()` function to demonstrate you have navigated to the right place.
+- Also print the output of `list.files()` function to demonstrate you have navigated to the right place.
+
+For example, on my computer, I use the `~` symbol as shorthand for `/Users/erossiter/` on Mac computers.  Then, I point inside the "documents" folder > point inside the "Github" folder > point inside "ProgrammingSpring2023" folder.
+
+```{r, eval=F, warning=FALSE}
+setwd('/Users/maxhammond/Documents/Notre Dame/R/Programming/ProgrammingSpring2023')
+getwd()
+list.files()
+```
+
+## 1b
+
+Since your working directory was set to point inside the course folder in 1a, using `setwd()` again will navigate relative to that location. To demonstrate this, set your working directory to the `PS01` folder.
+
+Demonstrate this code works using `getwd()` and `list.files()` as in 1a.
+
+``` {r, warning=FALSE}
+setwd("/Users/maxhammond/Documents/Notre Dame/R/Programming/ProgrammingSpring2023/PS01")
+getwd()
+list.files()
+```
+
+## 1c 
+
+Again, we've changed the working directory in 1b.  We're pointing inside the "PS01" folder now.  To move *back outside* this folder, we use `..` (two periods).  Practice moving back to the "ProgrammingSpring2023" folder.
+
+Demonstrate this code works as expected using `getwd()` and `list.files()`.
+
+```{r, warning=FALSE}
+setwd('..')
+getwd()
+list.files()
+```
+
+## 1d
+
+Like the `list.files()` function, there is a `list.dirs()` function that, as you can guess, lists all the *directories* (i.e., folders) in the current working directory.
+
+Use this function, with the argument `full.names` set to `FALSE` to print the names of all subfolders in our course folder.  You'll notice there's a lot of *hidden* folders, too.  This is how Github does its magic.
+
+```{r, warning=FALSE}
+setwd('/Users/maxhammond/Documents/Notre Dame/R/Programming/ProgrammingSpring2023')
+getwd()
+list.dirs(full.names = FALSE)
+```
+
+
+## 1e
+
+Now, we are going to put all the skills together.
+
+Write a for loop that navigates into each of the folders holding class meeting materials ("Day01-XX", "Day02-XX", etc.) and prints the names of all the files in the folder.  This code should be flexible, meaning it will work even when I add materials in the future (Day06, Day07, etc.).
+
+```{r}
+setwd("/Users/maxhammond/Documents/Notre Dame/R/Programming/ProgrammingSpring2023")
+wd = "/Users/maxhammond/Documents/Notre Dame/R/Programming/ProgrammingSpring2023"
+files = for(i in wd){
+          day = which(grepl(pattern = "Day", x=wd))
+          list.files(i[day])
+}
+
+print(files)
+```
+
+
+Note there are *many* ways to execute this task. Question 1 has walked you through the skills necessary to execute the task one way, but you may have a different preferred method.  Feel free to take any route to the answer as long as it is clean and efficient.
+
+
+
+# Question 2--JSON
+
+This question practices "functionalizing" your code, meaning turning repetitive tasks into functions.  It also practices using JSON objects in R and working with errors.  **Please complete this question in the .Rmd file.**
+
+## 2a
+
+Write a function called `scrape_state` that scrapes the county-level information for 2018 senate races like in class.  Recall data is stored on this website: [https://www.cnn.com/election/2018/results/senate](https://www.cnn.com/election/2018/results/senate).  The function should:
+
+- scrape the election returns for a single state given the state's abbreviation ("IN", "IA", etc.) as the only argument to the function
+- return the county-level results as a data.frame, like we practiced in class
+- include an error if the user of the function provides a non-existent state code
+
+Demonstrate the function works as intended by doing the following things:
+
+- call the function for Indiana
+- print the first few rows of the Indiana dataset
+- call the function for a non-existent code to generate your custom error
+
+
+Hint 1: remember R has all state abbreviations stored in a vector called `state.abbr`.
+
+
+Hint 2: Notice I've given the `r` chunk an extra argument (`error=TRUE`), which allows you to demonstrate an error without killing the knitting of the document.
+
+
+```{r, error=TRUE}
+stop("Even though this is an error, R will still knit.")
+
+# scrape_state <- function(...){
+# 
+# }
+# 
+# # will generate error
+# scrape_state("Indiana")
+# 
+# # correct use of function
+# indiana_df <- scrape_state("IN")
+# head(indiana_df)
+```
+
+
+
+
+## 2b
+
+Now write a for loop that calls your function for all 50 states.  Because not every state had a senate race in 2018, use the `try()` function to essentially skip over those states.  Note I am not asking you to "catch" and handle the errors or warnings in any way with `tryCatch()`, although you are free to do so if the error and warning messages bother you :)
+
+The for loop should somehow store all the results in the same data.frame.  To execute this, I recommend appending each iteration's data.frame to the same, main dataframe using the `rbind.data.frame()` function.  I've kindly outlined the structure of the for loop below.
+
+Print the dimensions of the resulting full dataset.
+
+```{r}
+# full_data <- data.frame()
+# for(s in state.abb){
+#   # I recommend implementing this function
+#   # to store results
+#   rbind.data.frame()
+# }
+```
+

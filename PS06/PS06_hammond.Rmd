@@ -63,8 +63,8 @@ Free
 #devtools::install_github('charlie86/spotifyr')
 library(spotifyr)
 #note here, I won't share my keys for security purposes, but I had to directly input my key even after placing it into my env and restarting R. 
-Sys.setenv(SPOTIFY_CLIENT_ID = 'spotify_client')
-Sys.setenv(SPOTIFY_CLIENT_SECRET = 'spotify_secret')
+Sys.setenv(SPOTIFY_CLIENT_ID = 'c0a8099de912475f8e18cc29035360e3')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = '45187b512e1b4ea6a098ee70baceee91')
 access_token <- get_spotify_access_token()
 
 badbunny <- get_artist_audio_features('bad bunny')
@@ -90,6 +90,13 @@ frank <- get_artist_audio_features('frank ocean')
 frank %>% 
     arrange(energy) %>% 
     select(track_name, energy) %>% 
+    head(5) %>% 
+    kable()
+
+john <- get_artist_audio_features('john mayer')
+john %>% 
+    arrange(-valence) %>% 
+    select(track_name, valence) %>% 
     head(5) %>% 
     kable()
 

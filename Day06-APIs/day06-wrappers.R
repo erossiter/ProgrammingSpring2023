@@ -54,3 +54,8 @@ old_reps_httr
 library(jsonlite)
 old_reps_clean <- fromJSON(rawToChar(old_reps_httr$content))
 str(old_reps_clean)
+
+
+Sys.setenv(SPOTIFY_CLIENT_ID = 'c0a8099de912475f8e18cc29035360e3')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = '45187b512e1b4ea6a098ee70baceee91')
+access_token <- get_spotify_access_token()

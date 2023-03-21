@@ -1,5 +1,5 @@
 ---
-title: "Problem Set 6"
+title: "Max Hammond, Problem Set 6"
 date: "Due March 7, 2023"
 output: pdf_document
 urlcolor: blue
@@ -45,13 +45,57 @@ Please write succinct narration for what you're doing so a classmate could look 
 
 - Write a short summary of what the API does and what is useful for (e.g., the Google Cloud Speech to Text API takes audio files as inputs, uses a model they've trained to transcribe the audio to text, and returns the text among other outputs)
   - provide a link to API documentation
+https://developer.spotify.com/dashboard/applications/c0a8099de912475f8e18cc29035360e3/users
   - provide a link to the R wrapper
+devtools::install_github('charlie86/spotifyr')
   - provide links to any other online resources you found helpful
+https://www.rcharlie.com/spotifyr/
+https://www.caitlinhudon.com/posts/2017/12/22/blue-christmas 
+https://msmith7161.github.io/what-is-speechiness/ 
   - discuss if a secret key was necessary, how you set it
+It is necessary. You are given a client key and a secret key which you can rotate.
   - discuss any other necessary set up
+You need a spotify account thats it. It does not need to be a premium subscription.
   - discuss any costs associated with the API
+Free
 - Make a few requests to the API
+```{r}
+#devtools::install_github('charlie86/spotifyr')
+library(spotifyr)
+#note here, I won't share my keys for security purposes, but I had to directly input my key even after placing it into my env and restarting R. 
+Sys.setenv(SPOTIFY_CLIENT_ID = 'spotify_client')
+Sys.setenv(SPOTIFY_CLIENT_SECRET = 'spotify_secret')
+access_token <- get_spotify_access_token()
+
+badbunny <- get_artist_audio_features('bad bunny')
+library(tidyverse)
+library(knitr)
+#this allows me to see which keys are used most often by bad bunny
+badbunny %>% 
+    count(key_mode, sort = TRUE) %>% 
+    head(5) %>% 
+    kable()
+
+#this allows me to get the lowest valence (joyfulness) song by ed sheeran. 
+edsheeran <- get_artist_audio_features('ed sheeran')
+edsheeran %>% 
+    arrange(-valence) %>% 
+    select(track_name, valence) %>% 
+    head(5) %>% 
+    kable()
+
+#To see for the ones with the least energy, use energy
+frank <- get_artist_audio_features('frank ocean')
+frank %>% 
+    arrange(energy) %>% 
+    select(track_name, energy) %>% 
+    head(5) %>% 
+    kable()
+
+```
 - Interpret the output of your requests
+
+This code interprets the top 5 key notes that bad bunny uses in his songs. Using 'get_track_audio_features' I can also pull a ton of information songs such as their valence and energy levels. I pulled the top 5 songs with the highest valence for ed sheeran and lowest energy levels for frank ocean according to spotify. I used Charlie Thompson’s fantastic spotifyr package to interface with the Spotify API. 
 
 
 
