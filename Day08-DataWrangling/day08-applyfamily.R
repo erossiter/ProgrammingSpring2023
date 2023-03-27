@@ -5,7 +5,7 @@ library(plyr)
 ## apply -----
 
 # Our basic example again
-e_mat <- matrix(rep(1:3, 3), ncol = 3)
+ex_mat <- matrix(rep(1:3, 3), ncol = 3)
 ex_mat
 
 # Sum each row
@@ -44,7 +44,7 @@ apply(ex_mat, 1, function(x) sum(x) + 2)
 sum_plus_y <- function(x, y){
 	sum(x) + y
 }
-
+x
 # Apply the function to an matrix specifying the argument
 apply(ex_mat, 1, sum_plus_y, y = 3)
 

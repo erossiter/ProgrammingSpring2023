@@ -21,7 +21,7 @@ dim(ak)
 # Everything you have already learned about boolean operators applies here.
 
 
-ak_nh <- filter(primaryPolls, 
+ak_nh <- filter(primaryPolls$, 
                 candidate_name == c("Amy Klobuchar"), 
                 state == "New Hampshire")
 
