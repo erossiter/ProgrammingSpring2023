@@ -1,0 +1,65 @@
+---
+title: "pivots"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write the R code to answer the following questions. You have until the beginning of next class to answer all of the questions below and commit to GitHub.
+
+# Overview
+
+We will continue using the polls data from class containing presidential primary polls for the 2020 election.  As a reminder, these are data shared with me.  Please do not use beyond class without inquiring with me further, and do not post publicly.
+
+# Question 1
+
+So far in class we've pivoted our data so every candidate \& date combination (for two dates) represents a row.
+
+Tweak this code to so we consider *all* dates of polls in NV and we find who is the candidate leading in the polls on each date.  You'll need to use our dplyr skills from last week, too.
+
+This is the code from class to get you started:
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(readr)
+primaryPolls <- read_csv('president_primary_polls_feb2020.csv')
+primaryPolls$start_date <- as.Date(primaryPolls$start_date, "%m/%d/%y")
+
+
+nevadaPrimaries <- primaryPolls %>%
+ filter(candidate_name %in% c("Amy Klobuchar", "Bernard Sanders",
+                              "Elizabeth Warren", "Joseph R. Biden Jr.",
+                              "Michael Bloomberg", "Pete Buttigieg")) %>%
+  filter(state == "Nevada") %>%
+  select(poll_id, candidate_name, pct, start_date)
+nevadaPrimaries
+
+wide_nv2 <- nevadaPrimaries %>%
+  pivot_wider(
+    id_cols = candidate_name,
+    names_from = start_date,
+    values_from = pct)
+wide_nv2
+
+# So far in class we've selected two dates to demonstrate
+# the wide to long pivot
+long_nv <- wide_nv2 %>%
+  select(candidate_name, "2020-01-08", "2020-01-06") %>%
+  pivot_longer(
+    cols = c("2020-01-08", "2020-01-06"),
+    names_to = "start_date",
+    values_to = "pct")
+long_nv
+```
+
+
+
+```{r}
+# answer here
+```
+
+
