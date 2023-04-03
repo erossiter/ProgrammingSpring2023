@@ -1,0 +1,40 @@
+---
+title: "joins"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Write the R code to answer the following questions. You have until the beginning of next class to answer all of the questions below and commit to GitHub. **You do not have to knit because of how large the data is.**
+
+# Overview
+
+We will continue using the Mayor Tweets data from class.  As a reminder, these are data shared with me.  Please do not use beyond class without inquiring with me further, and do not post publicly.
+
+I've provided a third dataset of Tweets that mention the mayors' Twitter handles.  It is already cleaned so the mayor that's being mentioning is stored in the `MayorHandle` column.
+
+
+```{r}
+library(tidyverse)
+library(dplyr)
+
+tweets <- read_csv("https://www.dropbox.com/s/rnaaglg5eaeou6s/Tweets.csv?dl=1")
+mayors <- read_csv(file = "https://raw.githubusercontent.com/jmontgomery/jmontgomery.github.io/master/PDS/Datasets/Mayors.csv")
+mentions <- read_csv(file = "https://raw.githubusercontent.com/jmontgomery/jmontgomery.github.io/master/PDS/Datasets/TwitterMentions.csv")
+
+# Some cleaning
+tweets$TweetID <- as.character(tweets$TweetID)
+tweets <- rename(tweets, TwitterHandle = ScreenName)
+
+# Remove duplicates
+mayors <- mayors %>%
+  filter(!MayorID %in% c(1008, 1409))
+```
+
+
+# Question 1
+
+Does it seem like mayors that tweet more are also mentioned more?
