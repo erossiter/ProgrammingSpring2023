@@ -1,0 +1,215 @@
+---
+title: "Problem Set 8 Answer Key"
+date: "Due March 21, 2023"
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+- Read all of these instructions closely.
+- This problem set is due Tuesday, March 21, 2023 at 4pm.
+- Submit files via Github:
+  1. the .Rmd (R Markdown) file
+  2. the knitted .pdf file
+  3. anything else the particular problem set might require
+- Use a copy of this file, perhaps with your name or initials appended to the file name, to write your answers to the questions. You'll see there is a designated space where your answers should begin.
+- Knitting the .Rmd file to a .pdf file *as you work* will ensure your code runs without errors and is working how you expect.  Knit early and often.  You've already read the instruction that a knitted .pdf is required when you submit.
+- Per the syllabus, I will not accept any late work.  Keep in mind the two lowest problem set scores are dropped.  Turn in what you have.
+- Clarification on the expectations for problem set submissions (posted in Slack, copied here):
+  - Always print the output of the code I'm requesting.
+    - Ex: If I want you to create a vector x with elements 1 through 10, print x after creating it so I can see it worked.
+  - Write any written answers in the space outside the code chunk, not inside with an R comment. 
+    - R comments are great to clarify code, but not for answering the question.
+  - Make sure any code or written content is not cut off in the pdf.
+    - This really should only apply to code, because if you follow item 2 in this list, the pdf will compile your written answers nicely.
+
+
+# Overview
+
+In problem set 4, you scraped the Notre Dame Political Science department faculty websites to create a database of their contact information, fields of study, etc.  In this problem set, you'll use my copy of that dataset, and we'll practice our regular expression and tidy-data skills.
+
+To start, read in my version of the faculty dataframe. I also used the `select` function to remove columns we will not need in this problem set.
+
+```{r, message=F}
+library(tidyverse)
+library(plyr)
+library(dplyr)
+faculty_df <- read_csv("faculty_df.csv")
+faculty_df <- faculty_df %>%
+  select(-link, -title, -office_hours, -phone)
+head(faculty_df)
+```
+
+
+# Question 1--Regex
+
+## 1a
+
+Use regular expressions to grab only the user id portion of the faculty member's email.  Create a new column called "user_id" with this information.  For example, my email is "erossite@nd.edu", so the new variable should only contain "erossite".
+
+In words, describe your regular expression solution. Use the `head` command to show some of the `user_id` variable.
+
+```{r}
+#code here
+```
+
+Erin answer:
+
+Remember the "^" symbol when used in hard brackets means "anything but".  Also remember the "+" symbol means "one or more".  Finally, by default, regular expression starts looking at the beginning of the string (although we also could have explicitly told it to do this.) Taken together, this regular expression starts reading characters at the begining of the string and extracts what counts as a match.  The match is made up of grabbing one or more characters as long as they aren't the "@" character.
+
+```{r}
+faculty_df$user_id <- str_extract(faculty_df$email, pattern = "[^@]+")
+head(faculty_df$user_id)
+```
+
+
+```{r}
+# Another way, but starting to be redundant
+#str_extract(faculty_df$email, pattern = "^.[^@]+")
+
+# Another way
+# .+ means number of any character
+# (?=@) means followed by the @ symbol
+#str_extract(faculty_df$email, pattern = ".+(?=@)")
+```
+
+## 1b
+
+Use regular expressions to grab only the office number, for example, 2020A or 316. Create a new column called `office_num` with this information.
+
+In words, describe your regular expression solution. Use the `head` command to show some of the `office_num` variable.
+
+```{r}
+#code here
+```
+
+
+Erin answer:
+
+This regular expression grabs anything that is alphanumeric, thus it stops at the first whitespace.
+
+```{r}
+faculty_df$office_num <- str_extract(faculty_df$office_location, pattern = "[[:alnum:]]+")
+head(faculty_df$office_num)
+```
+
+## 1c
+
+This is the trickiest question in the problem set.  Use the `str_extract_all` function, and write a regex pattern such that the name(s) of the faculty members' fields are extracted from the `fields` variable.
+
+For example, you should extract one string from Prof Bambrick: "Constitutional Studies".  However, you should extract two strings from Prof Bleck: "Comparative Politics" and "Methodology".
+
+Let me know if you get stuck.
+
+
+Then, use an "apply" function from the `plyr` package to add these information to the `faculty_df` dataset in the form of two new columns named `field1` and `field2`. As a starting point, note that the `str_extract_all` function will output results as a **l**ist.  
+
+In words, describe your regular expression solution. In words, describe your regular expression solution. Use the `head` command to show the first few rows the the dataset once these variables are added.
+
+```{r}
+#code here
+```
+
+
+Erin answer:
+
+The "(?<=[:punct:]\\s)" sets me up to find matches preceded by a punctuation and white space.  That is what the (?<=..).. part does.
+
+Now we've established we're only looking *after* the "Fields of Study: " part. Then what counts as a match? Any consecutive set of characters as long as its not a comma "[^,]'
+
+
+```{r}
+fields <- str_extract_all(faculty_df$fields, pattern = "(?<=[:punct:]\\s)[^,]+")
+head(fields)
+
+# add columns
+faculty_df$field1 <- plyr::laply(fields, function(f) f[1])
+faculty_df$field2 <- plyr::laply(fields, function(f) f[2])
+
+head(faculty_df)
+```
+
+
+
+
+# Question 2--pivots
+
+This question uses the `faculty_df` object with the updated columns from Question 1.  This question must be completed in order.
+
+
+
+## 2a
+
+For the purposes of this problem set, let's consider the order in which the fields are listed on the website how the faculty "rank" their fields of expertise.
+
+First, pivot the dataset to long format so that each faculty member has two observations, one for their first ranked field and one for their second ranked field. Among other columns, your solution should look something like this:
+
+| name | field_rank | field |
+|-----:|----:|-------:|
+| Christina Bambrick | field1 | Constitutional Studies |
+| Christina Bambrick | field2 | NA |
+| Jaimie Bleck | field1 | Comparative Politics |
+| Jaimie Bleck | field2 | Methodology |
+
+
+
+Print the dimensions of the resulting dataframe and the first few rows.
+
+```{r}
+#code here
+```
+
+Erin answer:
+
+```{r}
+faculty_long <- faculty_df %>%
+  pivot_longer(
+    cols = c("field1", "field2"),
+    names_to = "field_rank",
+    values_to = "field"
+  )
+
+dim(faculty_long)
+head(faculty_long)
+```
+
+
+## 2b
+
+Notice that people who do not have a second field listed still result in two rows.  Use `dplyr` functions (not base R) with piping to remove those rows.  Print the dimensions of the resulting dataframe and the first few rows.  You should have 73 rows after cleaning.
+
+Erin answer:
+
+```{r}
+faculty_long <- faculty_long %>%
+  filter(!is.na(field))
+
+head(faculty_long)
+dim(faculty_long)
+```
+
+## 2c
+
+Using your cleaned long-format dataframe, now pivot back to wide format. Print the dimensions of the resulting dataframe and the first few rows.  You should have 50 observations like the original dataframe.
+
+Erin answer:
+
+```{r}
+faculty_wide <- faculty_long %>%
+  pivot_wider(
+    names_from = "field_rank",
+    values_from = "field"
+  )
+
+head(faculty_df)
+dim(faculty_wide)
+```
+
+
+
+
