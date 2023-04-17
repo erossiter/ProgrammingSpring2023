@@ -1,0 +1,436 @@
+---
+title: "Day 11: R Packages and Quanteda"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: Erin Rossiter
+fontsize:  10 pt
+output:
+  beamer_presentation:
+    slide_level: 2
+    includes:
+      in_header: ../msc_files/preamble.tex
+---
+
+## (Class pre-requisites for Windows users)
+
+
+1. Download the appropriate version of RTools for your version of R: https://cran.r-project.org/bin/windows/Rtools/
+
+2. Install RTools by running the downloaded executable
+
+3. Set the path to RTools in your system environment variables. To do this, right-click on "My Computer" > "Properties" > "Advanced system settings" > "Environment Variables".
+
+Under "System Variables", find the "PATH" variable and click "Edit". Add the path to the RTools bin folder (e.g., `C:\Rtools\bin`) to the list of paths.
+
+Example: `C:\\Program Files\\R\\R-4.2.2\\bin; ` `C:\\Rtools;}`
+
+4. Restart your R session to ensure that the changes to the system environment variables take effect.
+
+# Announcements
+
+- PS09 due tomorrow \pause
+- Anything else?
+  
+# Roadmap
+
+Last unit:\pause
+
+- data cleaning and wrangling\pause
+
+Final unit:\pause
+
+- advanced topics\pause
+
+Today:\pause
+
+- R packages\pause
+- Basic text-as-data (Quanteda R package)\pause
+  - Not any methods, just working in R\pause
+- Rcpp\pause
+
+Next time:\pause
+
+- Data viz\pause
+  - Base R
+  - ggplot
+  - hopefully more fun stuff if time...
+
+# R Packages
+
+## What is an R package?
+
+- a collection of (mainly) functions, but also data sets, help files, etc.\pause
+- a way to share code and data with other R users\pause
+  - remember R is open-source language\pause
+  - large and active community of R users **and developers** who create R packages\pause
+  - R packages are why it is so impactful to learn R vs. another language\pause
+  - usually, new stats methods in political science will make their way to R first
+
+
+## Why make a package?
+
+- You have a novel statistical method\pause
+- You want credit for something, perhaps citations even (see [this paper](https://www.cambridge.org/core/journals/ps-political-science-and-politics/article/software-citations-in-political-science/CD8EAE80DCEF23816495322E3057E9F7?utm_source=hootsuite&utm_medium=twitter&utm_campaign=PSC_Apr23))\pause
+- "Simple" way to share complex code/results/data.  \pause
+- Coherent way to organize:\pause
+    - Data
+    - Documentation/explanation
+    - Meta-data
+    - Execute complex code
+- [Free Hadley Wickham book](https://r-pkgs.org/) if you want to make your own
+
+
+# Where to find/publish R packages 
+
+- CRAN
+- Github
+
+
+## CRAN
+
+CRAN is the Comprehensive R Archive Network\pause
+
+- As of today, there are 19365 available packages! See [here](https://cran.r-project.org/web/packages/)\pause
+- [List by name](https://cran.r-project.org/web/packages/available_packages_by_name.html)
+
+
+## GitHub
+
+You might find R packages on Github. Why?\pause
+
+1. Maybe this is their final home\pause
+
+- CRAN is the primary repository for R packages\pause
+- But, some developers prefer to distribute their packages through GitHub\pause
+- Easier, quicker, less rules and hassle!\pause
+  - Ex: Lots of dependencies that CRAN won't allow\pause
+- Or even kicked off CRAN...\pause
+  
+2. Maybe they are still in development\pause
+
+- Version control\pause
+- Collaboration\pause
+- Distribution\pause
+- Documentation\pause
+- ... as we know, all great on Github
+
+
+# Developing an R Package
+
+## Package Structure
+
+
+## An `R` package *must* contain:
+
+- `R` functions (`.R` files)\pause
+- Documentation (`.Rd` files)\pause
+- Meta-data (`NAMESPACE` and `DESCRIPTION`)\pause
+
+
+
+## An `R` package *can* contain:
+
+- Datasets\pause
+- Demo files\pause
+- Class structures (and helper functions)\pause
+- Compiled code\pause
+- README\pause
+- More
+
+
+## Example: squaresPack
+
+What is the necessary file structure to create an R package with these advanced statistical methods? (on board)
+
+```{r, eval=FALSE, message=FALSE, warning=FALSE}
+addSquares <- function(x, y){
+  return(list(square = (x^2 + y^2), x = x, y = y))
+}
+
+
+subtractSquares <- function(x, y){
+  return(list(square = (x^2 - y^2), x = x, y = y))
+}
+```
+
+
+
+## In more detail
+
+
+- Directory must have the name of the package\pause
+- `DESCRIPTION` file must have **exactly** that name. This contains required meta-data about the package (e.g., version number).\pause
+- `NAMESPACE` determined what functions or objects will be
+available in the global environment and sets up a package-specific namespace.\pause
+- The `R` directory contains `*.R` files with your scripts/functions/etc.\pause
+- The `man` directory contains the `*.Rd` help files.
+
+
+
+
+## Folder: `R`
+
+Put your `R` scripts in the `R` directory.\pause
+
+- The simplest convention is to include one `R` function in each file\pause
+- In many instances you will find that files contain multiple `R` functions, especially if there is some class system.
+
+
+##  Folder: `man`
+
+- These are your help files!\pause
+- Written in markup language called "rd" (R documentation)\pause
+
+
+```
+\name{addSquares}
+\alias{addSquares}
+\title{Adding squared values}
+\usage{
+  addSquares(x, y)
+}
+\usage{
+  addSquares(x, y)
+}
+\arguments{
+ \item{x}{A numeric object}
+ \item{y}{A numeric object with the same dimensionality as
+  \code{x}.}
+}
+\value{
+  A list with the elements 
+ \item{squares}{The sum of the  squared values} 
+ \item{x}{The first object input}
+ \item{y}{The second object input}
+}
+\description{
+  Finds the squared sum of numbers
+}
+\note{
+  This is a very simple function
+}
+\examples{
+myX <- c(20, 3); myY <- c(-2, 4.1)
+addSquares(myX, myY)
+}
+\author{
+  Jacob M. Montgomery
+}
+\seealso{
+    \code{\link{subtractSquares}}
+}
+```
+
+
+## File: `DESCRIPTION`
+
+Contains:\pause
+
+- package name\pause
+- formal title\pause
+- current version number\pause
+- the date for the version release\pause
+- the name and contact information of of the author and maintainer\pause
+- dependencies\pause
+- list of the files in the `R` subdirectory
+
+
+## Example:
+
+```
+Package: squaresPack
+Title: Adding and subtracting squared values
+Version: 0.1
+Author: Jacob M. Montgomery
+Maintainer: Jacob M. Montgomery <jacob.montgomery@wustl.edu>
+Description: Find sum and difference of squared values
+Depends:
+    R (>= 3.0.0)
+License: GPL (>= 2)
+Suggests:
+    devtools
+Collate:
+   `addSquares.R'
+   `subtractSquares.R'
+```
+
+## File: `NAMESPACE`
+
+This (can be) the most difficult part, and is aimed at setting up a
+package specific environment and controlling what functions users can
+see and/or use directly.  \pause
+
+At a minimum, it needs to read in the functions, class definitions
+etc. that are "available" to R. \pause
+
+The contents of the `NAMESPACE` file for this package are:\pause
+
+```
+export(addSquares)
+export(subtractSquares)
+```
+
+
+## Beyond scope for today
+
+- Adding [test files, see here](https://testthat.r-lib.org)\pause
+- Dependencies\pause
+- Adding data (its much like adding R functions)\pause
+- Final steps for submitting package to CRAN, meeting their rules, etc.\pause
+  - See Hadley Wickham book linked at beginning
+
+
+
+# Using R packages
+
+## Downloading
+
+## Downloading from CRAN
+
+- We need to downloads and install the packages we want onto our local computers\pause
+- You'll ask R to download the package from a repository, probably CRAN or Github\pause
+  - That's why we don't have all 19000+ package already at our disposal!\pause
+
+```{r, eval=F}
+install.packages("A3")
+```
+
+
+## Downloading from Github
+
+- We use the `install_github()` in the `devtools` package (yes, this is meta)\pause
+- The format is: `install_github("username/repo")`\pause
+
+```{r, eval=F}
+# This package has functions that help install
+# other packages on GitHub!
+install.packages("devtools")
+
+# Load it (next topic in slides)
+library(devtools)
+
+# An Example
+install_github("erossiter/blockclustr")
+```
+
+
+
+## Loading
+
+## Loading the package for use
+
+- We download it, so entire package is now on our computer\pause
+- Now, we want to be able to use the functions (or anything else) in it!\pause
+- Loading the package is the same whether downloaded from CRAN or GitHub\pause
+- `library()` load everything in the package into memory\pause
+
+```{r}
+library(A3)
+library(blockclustr)
+```
+
+## Or access without loading
+
+- Syntax is ``package::function()`\pause
+- Grabs function from the package\pause
+- Useful:\pause
+  - to be very clear where function comes from
+  - if same function name in different packages\pause
+  
+- Examples:
+
+```{r, eval=F}
+blockclustr::blockclustr()
+dplyr::left_join()
+rvest::read_html()
+```
+
+
+## Seeing the nuts and bolts
+
+- Lots of people make R packages\pause
+- There are pros and cons of this. Thoughts?\pause
+  - Some are better than others...\pause
+  - Sometimes they are wrong.  Sometimes they break.\pause
+- You might need to dig into the code itself\pause
+- On GitHub, it's easy\pause
+  - Example: [https://github.com/erossiter/blockclustr]\pause
+- On CRAN, it's easy too, you just have to know where to look\pause
+  - Example: [https://cran.r-project.org/web/packages/stm/index.html]
+
+
+# Activity
+
+# quanteda: Text-as-data
+
+## Representing text as numbers
+
+- We usually have a **corpus** of **documents**\pause
+  - Each document is made up of text!\pause
+- We need to represent the text in some quantitative way\pause
+  - **Document-term matrix** (DTM)\pause
+  - (Board)\pause
+- Usual simplifying assumptions:\pause
+  - n-gram\pause
+    - usually 1-gram\pause
+  - "bag of words"\pause
+    - order doesn't matter\pause
+  - stemming\pause
+  - remove punctuation, numbers, "stopwords," most frequent or infrequent words\pause
+
+## When to do this vs. stringr?
+
+- Representing text as a datset is useful for subsequent, systematic analysis\pause
+  - what proportion of documents talk about X?\pause
+  - what are the main topics across the Corpus?\pause
+- What we did with stringr was aimed at data cleaning\pause
+  - Lots of ways emails, names, address are in my dataset, I need to make variable systematic\pause
+  - etc.\pause
+- Do not reinvent the wheel.  Get your document into a DTM as soon as possible if you're going to do analyses with text.
+
+## Example script
+
+# Rcpp: Integrating R and C++
+
+## Making R faster
+
+- Rcpp is a way to integrate C++ code into R functions\pause
+- Why would we want to do this?\pause
+  - C++ is much, much faster\pause
+- Deep down R is actually C\pause
+- R is a high level language designed to make **coding** faster and easier, but... as a consequence it can often execute slowly\pause
+- [Hadley Wickham yet again has an amazing book on this](http://adv-r.had.co.nz/Rcpp.html)
+
+## At a high level
+
+```{R}
+library(Rcpp)
+cppFunction(
+'int addC(int x, int y, int z) {
+  int sum = x + y + z;
+            return sum;
+            }')
+addC(1,2,3)
+```
+
+- You must declare the type for 
+    - inputs
+    - outputs
+    - variables
+
+
+## Compared to R...
+
+In R things are quite different! What's different?
+
+```{R, eval=TRUE}
+addR <- function(x, y, z){
+  return(x + y +z)
+}
+```
+
+## Exposure topic because...
+
+- You need a C++ compiler to use `Rcpp` package
+- You might have it, so feel free to try following along, but I won't debug in class
+
+
