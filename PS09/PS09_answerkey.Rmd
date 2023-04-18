@@ -1,0 +1,186 @@
+---
+title: "Problem Set 9 Answer Key"
+date: "Due April 11, 2023"
+output: pdf_document
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Instructions
+
+- Read all of these instructions closely.
+- This problem set is due Tuesday, April 11, 2023 at 4pm.
+- Submit files via Github:
+  1. the .Rmd (R Markdown) file
+  2. the knitted .pdf file
+  3. anything else the particular problem set might require
+- Use a copy of this file, perhaps with your name or initials appended to the file name, to write your answers to the questions. You'll see there is a designated space where your answers should begin.
+- Knitting the .Rmd file to a .pdf file *as you work* will ensure your code runs without errors and is working how you expect.  Knit early and often.  You've already read the instruction that a knitted .pdf is required when you submit.
+- Per the syllabus, I will not accept any late work.  Keep in mind the two lowest problem set scores are dropped.  Turn in what you have.
+- Clarification on the expectations for problem set submissions (posted in Slack, copied here):
+  - Always print the output of the code I'm requesting.
+    - Ex: If I want you to create a vector x with elements 1 through 10, print x after creating it so I can see it worked.
+  - Write any written answers in the space outside the code chunk, not inside with an R comment. 
+    - R comments are great to clarify code, but not for answering the question.
+  - Make sure any code or written content is not cut off in the pdf.
+    - This really should only apply to code, because if you follow item 2 in this list, the pdf will compile your written answers nicely.
+
+
+# Overview
+
+In problem set 4, you scraped the Notre Dame Political Science department faculty websites to create a database of their contact information, fields of study, etc.  In this problem set, you'll use my copy of that dataset, and we'll practice merging two datasets together.
+
+# Question 1
+
+## 1a
+
+To start, read in my version of the the `faculty_df` and `courses_df` objects, where `courses_df` contains information [from the department website](https://politicalscience.nd.edu/graduate-program/courses/) about the graduate classes being offered in Spring 2022.
+
+Erin answer:
+
+```{r, message=F}
+library(tidyverse)
+library(dplyr)
+faculty_df <- read_csv("faculty_df.csv")
+courses_df <- read_csv("courses_df.csv")
+```
+
+
+## 1b
+
+Complete a left join.  Print the dimensions of the result. Explain the results of each join statement in terms of these data.  Be very specific about why we got the resulting dimensions.
+
+Erin answer:
+
+The original `faculty_df` dataset has 50 observations, one for each unique faculty member. The `courses_df` dataset has 14 observations, one for each course.  I checked, and no faculty member is teaching two graduate courses this semester, so we do not have to worry about multiple matches.
+
+The left join keeps all rows of the `faculty_df` and merges in course information where there are faculty matches in `courses_df`.  Therefore, the resulting dataframe has 50 observations and 10 columns (just the one new column with course name).
+
+```{r}
+# first, need to rename column so the linking
+# variable is common across X and Y
+# I intentionally named is something different
+# to practice this.
+courses_df <- courses_df %>%
+  rename(name = faculty_name)
+
+# name has unique values in both, don't
+# have to worry about duplicates
+length(unique(faculty_df$name)) == nrow(faculty_df)
+length(unique(courses_df$name)) == nrow(courses_df)
+
+df_leftjoin <- faculty_df %>%
+  left_join(courses_df, by = "name")
+
+dim(df_leftjoin)
+```
+
+
+## 1c
+
+Complete a full join.  Explain the results of each join statement in terms of these data.  Be very specific about why we got the resulting dimensions.
+
+Erin answer:
+
+The full join is similar to the left join, however, it also keeps all rows in the `courses_df`, even if they are not matches in the `faculty_df`.  Because four courses are cross-listed in POLS but are tought by faculty who are not included in the "Core Faculty", we have four extra rows when doing a full join vs. a left join.
+
+```{r}
+df_fulljoin <- faculty_df %>%
+  full_join(courses_df, by = "name")
+
+dim(df_fulljoin)
+tail(df_fulljoin)
+```
+
+
+## 1d
+
+Complete an inner join.  Explain the results of each join statement in terms of these data.  Be very specific about why we got the resulting dimensions.
+
+Erin answer:
+
+Inner joins only keep observations forom `faculty_df` where there is a match in `course_df`.  Therefore, we are only keeping the faculty information like office hours, email, etc. for the 14 faculty who are currently teaching a graduate course.  The 4 faculty cross-listing in the department do not appear in `faculty_df`, so they are not observations included in the inner join.
+
+
+```{r}
+df_innerjoin <- faculty_df %>%
+  inner_join(courses_df, by = "name")
+
+dim(df_innerjoin)
+df_innerjoin
+```
+
+
+# Question 2
+
+Your task is to combine two datasets in order to observe how many endorsements each
+candidate received.
+
+- Change the `endors` variable name `endorsee` to `candidate_name`
+- Filter `polls` to only include the following 6 candidates: Amy Klobuchar, Bernard
+Sanders, Elizabeth Warren, Joseph R. Biden Jr., Michael Bloomberg, Pete Buttigieg.  I've made it easy for you -- this is exactly how they appear in the `polls` data without other variations.
+- Subset `polls` to the following five variables: `candidate_name`, `sample_size`, `start_date`, `party`, `pct`
+- Compare the candidate names in the two datasets and find instances where the a candidates name is
+spelled differently i.e. Bernard vs. Bernie. You'll need to make these variables comparable across `endors` and `polls` in order to merge.
+- Now add poll-level information to the endorsement dataset.  Specifically, we want to know the average polling numbers for each candidate from the `pct` variable.  Defend the kind of join statement you used.
+
+```{r, message=F}
+#install.packages("fivethirtyeight")
+library(fivethirtyeight)
+library(tidyverse)
+polls <- read_csv("president_primary_polls_feb2020.csv")
+endors <- endorsements_2020 # from the fiverthirtyeight package
+```
+
+Erin answer:
+
+```{r}
+# change variable name -----
+endors <- endors %>%
+  rename(candidate_name = endorsee)
+
+# keep only certain candidates and columns in polls data -----
+keep_candidates <- c("Amy Klobuchar", "Bernard Sanders",
+                     "Elizabeth Warren", "Joseph R. Biden Jr.",
+                     "Michael Bloomberg", "Pete Buttigieg")
+  
+polls <- polls %>%
+  filter(candidate_name %in% keep_candidates) %>%
+  select(candidate_name, sample_size, start_date, party, pct)
+
+# making candidate_name variable values comparable -----
+# first, just checking it out
+sort(unique(polls$candidate_name))
+sort(unique(endors$candidate_name))
+
+# regex pattern
+name_pattern <- "Klobuchar|Sanders|Warren|Biden|Bloomberg|Buttigieg"
+
+# create new, cleaned variable for both datasets to merge on
+polls$cand_name_cleaned <- stringr::str_extract(polls$candidate_name,
+                                                pattern = name_pattern)
+endors$cand_name_cleaned <- stringr::str_extract(endors$candidate_name,
+                                                pattern = name_pattern)
+
+# check it out
+table(polls$cand_name_cleaned)
+table(endors$cand_name_cleaned)
+
+# calculate average polling pct ------
+polls_pct <- polls %>%
+  group_by(cand_name_cleaned) %>%
+  summarise(avg_pct = mean(pct))
+polls_pct
+
+# merge -----
+endors_merge <- endors %>%
+  left_join(polls_pct)
+endors_merge
+```
+
+
+
+
