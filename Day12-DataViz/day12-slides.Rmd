@@ -1,0 +1,151 @@
+---
+title: "Day 12: Data Visualization"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+author: Erin Rossiter
+fontsize:  10 pt
+output:
+  beamer_presentation:
+    slide_level: 2
+    includes:
+      in_header: ../msc_files/preamble.tex
+---
+
+# Announcements
+
+- (100% pasted from Day08 slides)\pause
+- Final week: project "presentations"\pause
+  - i.e., show and tell\pause
+  - no slides needed (unless you want)\pause
+  - big scraping project? walk us through steps, show final dataset\pause
+  - learn a new package? show us how you get it started and one-two cool functions and their outputs\pause
+  - everyone has **5 minutes** to share, I will cut you off\pause
+  - then ~5 minutes for Q&A\pause
+- Please take the CIF!
+
+## Random presentation order
+
+```{r}
+set.seed(1)
+sample(1:14)
+```
+
+
+- Rasheed
+- Nico
+- Max
+- Ali
+- Emily
+- Jing
+- McKenzie
+- Ben
+- Prithvi
+- Abigail
+- Adriana
+- Binh
+- Jody
+- Emma
+
+
+
+# Today
+
+- Data viz\pause
+  - Base R\pause
+  - ggplot\pause
+  - Shiny\pause
+  - (again, not extending to theory of how to visualize results)\pause
+
+- Debrief/feedback\pause
+  - Save 30-45 minutes for this
+
+# Data Viz
+
+## Base R vs. ggplot
+
+Base R plotting and ggplot are both used for creating visualizations in R, but they differ in the way they approach plotting and the syntax used.\pause
+
+Similarities:\pause
+
+- Both can be used for lots of plot types, like scatter plots, line charts, bar charts, histograms...\pause
+- Both allow you to customize plot aesthetics like colors, shapes, sizes...\pause
+- Both take data types like data frames, matrices, vectors...\pause
+
+## Base R vs. ggplot
+
+Differences:\pause
+
+- **Syntax**
+  - Base R--plots each element one by one (you say exactly *what* and in what order)\pause
+  - ggplot--layers different elements (more abstract, you say *how* not exactly *what*)\pause
+- **Default settings**\pause
+  - Base R--limited default settings for aesthetics\pause
+  - ggplot--wide range of default settings that are already high quality/professional.\pause
+- **Learning curve**\pause
+  - base R--easy to get started\pause
+  - ggplot--steeper learning curve, more complex syntax, lots of companion packages to learn\pause
+    - but, easier once you know it (less lines of code)!
+
+## Resources
+
+[Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf)
+
+[R Graph Gallery](https://r-graph-gallery.com/index.html)
+
+[Base R Cheatsheet](http://publish.illinois.edu/johnrgallagher/files/2015/10/BaseGraphicsCheatsheet.pdf)
+
+# RShiny
+
+## What is it?
+
+- A toolkit to write interactive web applications using R code\pause
+- [Let's check out this gallery](https://shiny.rstudio.com/gallery/)\pause
+  - Tip: if you ever see an academic have a shiny app with data you're interested in, just email them\pause
+- Note: dashboards are beyond the scope of today
+
+## How to share your app
+
+- Host app on shinyapps.io or another hosting service\pause
+  - [Book for how to post app on shinyapps.io](https://docs.posit.co/shinyapps.io/)\pause
+- Then, you can embed on your own website
+
+
+
+# Big Picture
+
+My goals in the course:
+
+- In terms of research, my main goal was to makes your lives easier and faster, and to open up avenues you might not have pursued:\pause
+  - collection\pause
+  - organization\pause
+  - cleaning\pause
+  - wrangling\pause
+  - sharing\pause
+  - literacy/fluency\pause
+    - building blocks of R\pause
+    - reading others' code, even if its not how you code\pause
+    - (base R vs dplyr or ggplot2)\pause
+- My goal was also to build a very solid foundation so you are confident you can teach yourself the newest, coolest thing when no longer a class devoted to it\pause
+- Build a community\pause
+
+Also:\pause
+
+- R is a marketable skills in and of itself, esp in combination with statistics skills
+
+  
+# Debrief
+
+
+- Open to *any* thoughts
+  - What went well, what didn't
+  - Most useful, least useful
+  - What you'd change, what you'd keep the same...
+
+1. What are the most challenging aspects of learning R? 
+2. How has your understanding of R as a tool, what you're capable of with it, etc. improved through this class? 
+3. Which R programming concepts did you find most useful and applicable to your research/work/future plans? 
+4. How would you rate the pace and difficulty level of the class? 
+5. Were there any areas/topics that you would have liked to spend more/less time on? 
+6. What suggestions do you have for improving the class for future students? 
+7. Were the homeworks, and labs helpful for your learning?  What about the project?
+  
+
